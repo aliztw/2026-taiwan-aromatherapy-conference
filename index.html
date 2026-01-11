@@ -16,9 +16,10 @@
     <!-- Lucide Icons (CDN) -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- HTML2Canvas (用於產出分享圖卡) -->
+    <!-- HTML2Canvas (for image generation) -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
+    <!-- Tailwind Config for Custom Colors -->
     <script>
         tailwind.config = {
             theme: {
@@ -43,25 +44,30 @@
         html { scroll-behavior: smooth; }
         body { margin: 0; padding: 0; overflow-x: hidden; }
         
-        /* 自定義捲軸 */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #1c1917; }
         ::-webkit-scrollbar-thumb { background: #57534e; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
 
-        /* 動畫效果 */
+        /* Animations */
         @keyframes fade-in-up {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
 
         @keyframes pulse-slow {
             0%, 100% { opacity: 0.4; }
             50% { opacity: 0.7; }
         }
-        .animate-pulse-slow { animation: pulse-slow 3s infinite; }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite;
+        }
 
+        /* Shimmer for Badge */
         @keyframes shimmer {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
@@ -72,11 +78,14 @@
             animation: shimmer 3s infinite linear;
         }
 
+        /* Button Breathing Animation */
         @keyframes button-breathe {
             0%, 100% { filter: brightness(100%); }
             50% { filter: brightness(120%); box-shadow: 0 0 15px rgba(245, 158, 11, 0.5); }
         }
-        .animate-button-breathe { animation: button-breathe 2s infinite ease-in-out; }
+        .animate-button-breathe {
+            animation: button-breathe 2s infinite ease-in-out;
+        }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.1);
@@ -85,9 +94,17 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .tabular-nums { font-variant-numeric: tabular-nums; }
+        /* 匯出專用樣式 */
+        .tabular-nums {
+            font-variant-numeric: tabular-nums;
+        }
 
-        /* 匯出圖卡專用樣式 */
+        /* 匯出模式樣式：強制隱藏裝飾元素 */
+        .export-hide {
+            display: none !important;
+        }
+
+        /* 匯出模式強制固定尺寸與取消動畫 */
         #export-card.export-mode {
             width: 1080px !important;
             height: 1920px !important;
@@ -97,12 +114,21 @@
             justify-content: space-between !important;
             padding: 100px 80px !important;
             box-sizing: border-box !important;
+            transform: none !important;
+            transition: none !important;
+            animation: none !important;
             position: relative !important;
             overflow: hidden !important;
         }
+        #export-card.export-mode::before,
+        #export-card.export-mode::after {
+            display: none !important;
+        }
+
         #export-card.export-mode * {
-            animation: none !important;
             transition: none !important;
+            animation: none !important;
+            transform: none !important;
         }
     </style>
 <script type="importmap">
@@ -116,392 +142,254 @@
 </head>
 <body class="bg-stone-50 text-stone-800 selection:bg-amber-200 selection:text-amber-900">
 
-    <!-- 導覽列 -->
+    <!-- Navigation -->
     <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-6 bg-transparent">
         <div class="container mx-auto px-6 md:px-12 lg:px-20 flex justify-between items-center text-white">
-            <div class="flex items-center space-x-2 cursor-pointer" onclick="scrollToSection('hero')">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="window.scrollToSection('hero')">
                 <img src="https://img.shoplineapp.com/media/image_clips/693fd310ce43e58dabfdaa56/original.png?1765790479=&owner_id=5caf39294d91a10001727c79" alt="Logo" class="w-10 h-10 object-contain">
                 <div class="flex flex-col">
                     <span class="font-serif text-lg lg:text-2xl font-bold leading-none tracking-widest">2026臺灣精油芳療年會</span>
-                    <span class="text-[10px] lg:text-xs tracking-wider opacity-80 uppercase">Taiwan Aromatherapy Conference</span>
+                    <span class="text-[10px] lg:text-xs tracking-wider opacity-80">Taiwan Aromatherapy Conference</span>
                 </div>
             </div>
 
+            <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-8">
-                <button onclick="scrollToSection('calculator')" class="hover:text-amber-400 transition-colors text-sm lg:text-base tracking-widest">生命靈數計算</button>
-                <button onclick="scrollToSection('exhibition')" class="hover:text-amber-400 transition-colors text-sm lg:text-base tracking-widest">線上展覽</button>
+                <button onclick="window.scrollToSection('calculator')" class="hover:text-amber-400 transition-colors text-sm lg:text-base tracking-widest">生命靈數計算</button>
+                <button onclick="window.scrollToSection('exhibition')" class="hover:text-amber-400 transition-colors text-sm lg:text-base tracking-widest">線上展覽</button>
             </div>
 
+            <!-- Mobile Toggle -->
             <div class="md:hidden">
-                <button id="mobile-menu-btn" class="text-white focus:outline-none">
+                <button id="mobile-menu-btn" class="text-white">
                     <i data-lucide="menu"></i>
                 </button>
             </div>
         </div>
 
+        <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-stone-900 border-t border-stone-800 p-6 flex flex-col space-y-4 shadow-xl">
-            <button onclick="scrollToSection('calculator')" class="text-left text-white hover:text-amber-400 py-2 border-b border-stone-800">生命靈數計算</button>
-            <button onclick="scrollToSection('exhibition')" class="text-left text-white hover:text-amber-400 py-2">線上展覽</button>
+            <button onclick="window.scrollToSection('calculator')" class="text-left text-white hover:text-amber-400 py-2">生命靈數計算</button>
+            <button onclick="window.scrollToSection('exhibition')" class="text-left text-white hover:text-amber-400 py-2">線上展覽</button>
         </div>
     </nav>
 
-    <!-- 主視覺區 -->
-    <section id="hero" class="relative w-full min-h-screen flex flex-col justify-center overflow-hidden bg-stone-900">
+    <!-- Hero Section -->
+    <section id="hero" class="relative w-full min-h-screen md:min-h-0 md:h-auto lg:h-screen flex flex-col justify-start md:justify-start lg:justify-center overflow-hidden bg-stone-900 pt-28 md:pt-32 lg:pt-0 pb-12 md:pb-48 lg:pb-0">
+        <!-- Background -->
         <div class="absolute inset-0 z-0">
             <img src="https://img.shoplineapp.com/media/image_clips/693fc987366d70e3a42a157a/original.jpg?1765788039=&owner_id=5caf39294d91a10001727c79" alt="Background" class="w-full h-full object-cover opacity-60">
             <div class="absolute inset-0 bg-gradient-to-br from-stone-900 via-amber-900/40 to-emerald-900/60 mix-blend-overlay"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-stone-900/20 to-stone-900"></div>
+            
+            <!-- Animated Blobs -->
             <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-[100px] animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-[100px] animate-pulse-slow" style="animation-delay: 1s;"></div>
         </div>
 
-        <div class="relative z-10 container mx-auto px-6 md:px-12 lg:px-20 grid md:grid-cols-2 gap-12 items-center pt-24">
-            <div class="space-y-10 animate-fade-in-up flex flex-col items-center md:items-start text-center md:text-left">
+        <!-- Content Container -->
+        <div class="relative z-10 container mx-auto px-6 md:px-12 lg:px-20 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            
+            <!-- Left Column -->
+            <div class="space-y-10 animate-fade-in-up flex flex-col items-center text-center">
+                <!-- Counter -->
                 <div class="flex items-center space-x-3 glass-card w-fit px-4 py-2 rounded-full">
-                    <span class="text-white text-sm">已有 <span id="participant-count" class="text-amber-400 font-bold">0</span> 位芳療師參與體驗</span>
+                    <div class="flex -space-x-2">
+                        <div class="w-8 h-8 rounded-full bg-emerald-400 flex items-center justify-center border-2 border-stone-800"><i data-lucide="user" class="w-4 h-4 text-white"></i></div>
+                        <div class="w-8 h-8 rounded-full bg-amber-400 flex items-center justify-center border-2 border-stone-800"><i data-lucide="users" class="w-4 h-4 text-white"></i></div>
+                        <div class="w-8 h-8 rounded-full bg-blue-400 flex items-center justify-center border-2 border-stone-800"><i data-lucide="user-plus" class="w-4 h-4 text-white"></i></div>
+                    </div>
+                    <span class="text-white text-sm lg:text-base font-medium">已有 <span id="participant-count" class="text-amber-400 font-bold">0</span> 位芳療師參與體驗</span>
                 </div>
-                <div class="w-full">
-                    <img src="https://img.shoplineapp.com/media/image_clips/6952512a69f3479d1562bb2a/original.png?1767002410=&owner_id=5caf39294d91a10001727c79" alt="玩轉五行" class="w-full max-w-md mx-auto md:mx-0 drop-shadow-2xl h-auto object-contain">
-                </div>
-                <button onclick="scrollToSection('calculator')" class="animate-button-breathe bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white px-10 py-5 rounded-full text-xl font-bold tracking-wider shadow-lg transition-all transform hover:-translate-y-1">
+
+                <div class="w-full flex flex-col items-center gap-6">
+                  <!-- Title Image -->
+                  <div class="w-full flex justify-center">
+                    <img src="https://img.shoplineapp.com/media/image_clips/6952512a69f3479d1562bb2a/original.png?1767002410=&owner_id=5caf39294d91a10001727c79" alt="玩轉五行" width="50%" class="drop-shadow-2xl h-auto object-contain">
+                    <h1 class="sr-only">光影流芳 玩轉五行</h1>
+                  </div>
+
+                  <!-- CTA -->
+                  <button onclick="window.scrollToSection('calculator')" class="group animate-button-breathe bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white px-8 py-4 rounded-full text-lg lg:text-xl xl:text-2xl font-bold tracking-wider shadow-lg shadow-amber-900/50 transition-all duration-300 flex items-center gap-2 transform hover:-translate-y-1">
                     開始探索你的五行能量
-                </button>
+                    <i data-lucide="chevron-down" class="w-5 h-5 group-hover:translate-y-1 transition-transform"></i>
+                  </button>
+                </div>
+
+                <!-- Description (Mobile) -->
+                <div class="glass-card p-6 rounded-3xl text-white/90 shadow-2xl backdrop-blur-md border border-white/20 md:hidden w-full max-w-lg">
+                    <p class="text-base leading-relaxed font-light">
+                        每個人都有專屬的五行能量密碼，透過生命靈數，找到你與精油的共振頻率。在光影交織中，感受<span class="text-el-wood font-bold">木的生發</span>、<span class="text-el-fire font-bold">火的熱情</span>、<span class="text-el-earth font-bold">土的穩定</span>、<span class="text-el-metal font-bold">金的收斂</span>、<span class="text-el-water font-bold">水的流動</span>。
+                    </p>
+                </div>
             </div>
+
+            <!-- Right Column (Desktop Only) -->
             <div class="hidden md:block animate-fade-in-up" style="animation-delay: 0.2s;">
-                <div class="glass-card p-10 rounded-3xl text-white/90 shadow-2xl max-w-md ml-auto">
-                    <p class="text-xl leading-relaxed font-light">
-                        每個人都有專屬的五行能量密碼，透過生命靈數，找到你與精油的共振頻率。在光影交織中，感受五行的平衡之美。
+                <div class="glass-card p-8 rounded-3xl text-white/90 shadow-2xl max-w-md ml-auto">
+                    <p class="text-lg lg:text-xl xl:text-2xl leading-relaxed font-light">
+                        每個人都有專屬的五行能量密碼，透過生命靈數，找到你與精油的共振頻率。在光影交織中，感受<span class="text-el-wood font-bold">木的生發</span>、<span class="text-el-fire font-bold">火的熱情</span>、<span class="text-el-earth font-bold">土的穩定</span>、<span class="text-el-metal font-bold">金的收斂</span>、<span class="text-el-water font-bold">水的流動</span>。
                     </p>
                 </div>
             </div>
         </div>
+
+        <!-- Scroll Indicator -->
+        <div class="w-full flex justify-center md:absolute md:bottom-20 lg:bottom-8 md:left-1/2 md:-translate-x-1/2 z-20 mt-8 md:mt-0">
+            <div class="flex flex-col items-center animate-bounce text-white/50">
+                <span class="text-xs tracking-widest mb-2">向下探索</span>
+                <i data-lucide="chevron-down" class="w-6 h-6"></i>
+            </div>
+        </div>
     </section>
 
-    <!-- 計算器區 -->
+    <!-- Calculator Section -->
     <section id="calculator" class="py-24 bg-stone-50 overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-el-wood/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-el-metal/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
         <div class="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
-            <div class="flex flex-col items-center mb-16 text-center">
-                <h2 class="text-4xl md:text-6xl font-serif font-bold text-stone-800 mb-4">生命靈數計算</h2>
+            <div class="flex flex-col items-center mb-16">
+                <h2 class="text-6xl md:text-9xl lg:text-[10rem] xl:text-[12rem] font-serif text-stone-800 opacity-10 absolute top-[-40px] select-none">01</h2>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-stone-800 mb-4 relative">生命靈數計算</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-el-wood to-el-metal"></div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto items-stretch">
-                <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-stone-100 flex flex-col justify-center">
-                    <div class="space-y-6">
-                        <h3 class="text-xl text-stone-600 mb-4 font-medium">請選擇您的西元出生日期</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="text-sm text-stone-500 font-medium">年份</label>
-                                <select id="year-select" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-500 outline-none"></select>
+            <div class="grid md:grid-cols-2 gap-12 lg:gap-24 items-stretch max-w-6xl mx-auto">
+                <div class="flex flex-col h-full">
+                    <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl shadow-stone-200/50 border border-stone-100 h-full flex flex-col">
+                        <div class="space-y-6">
+                            <h3 class="text-xl lg:text-2xl text-stone-600 mb-8 font-medium">請選擇您的西元出生日期</h3>
+                            <div class="space-y-2">
+                                <label class="text-sm lg:text-base text-stone-500 font-medium tracking-wide">年份</label>
+                                <div class="relative">
+                                    <select id="year-select" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-stone-700 lg:text-lg">
+                                        <option value="" disabled selected>選擇年份</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 w-5 h-5 pointer-events-none"></i>
+                                </div>
                             </div>
-                            <div>
-                                <label class="text-sm text-stone-500 font-medium">月份</label>
-                                <select id="month-select" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-500 outline-none"></select>
+                            <div class="space-y-2">
+                                <label class="text-sm lg:text-base text-stone-500 font-medium tracking-wide">月份</label>
+                                <div class="relative">
+                                    <select id="month-select" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-stone-700 lg:text-lg">
+                                        <option value="" disabled selected>選擇月份</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 w-5 h-5 pointer-events-none"></i>
+                                </div>
                             </div>
-                            <div>
-                                <label class="text-sm text-stone-500 font-medium">日期</label>
-                                <select id="day-select" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-amber-500 outline-none"></select>
+                            <div class="space-y-2">
+                                <label class="text-sm lg:text-base text-stone-500 font-medium tracking-wide">日期</label>
+                                <div class="relative">
+                                    <select id="day-select" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 text-stone-700 lg:text-lg">
+                                        <option value="" disabled selected>選擇日期</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 w-5 h-5 pointer-events-none"></i>
+                                </div>
+                            </div>
+
+                            <button onclick="window.calculateElement()" class="w-full bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-bold py-4 rounded-full transition-all duration-300 shadow-lg shadow-orange-900/20 mt-4 text-lg lg:text-xl">
+                                計算我的五行屬性
+                            </button>
+                        </div>
+
+                        <div id="left-card-initial" class="mt-3">
+                            <p class="text-xs md:text-sm text-gray-400 text-center">計算結果將出現在右側或下方</p>
+                        </div>
+
+                        <div id="left-card-result" class="hidden flex-grow flex flex-col items-center justify-center mt-4">
+                            <p class="text-xs md:text-sm text-gray-400 text-center">計算結果將出現在右側或下方</p>
+                            <div id="element-icons-row-result" class="w-full mt-6 animate-fade-in-up">
+                                <div class="grid grid-cols-5 gap-2 md:gap-4 w-full">
+                                    <div class="flex flex-col items-center gap-2">
+                                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-el-wood flex items-center justify-center shadow-sm border border-white"><i data-lucide="leaf" class="text-white w-5 h-5 md:w-6 md:h-6"></i></div>
+                                        <span class="text-el-wood font-bold text-xs md:text-sm">木</span>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-2">
+                                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-el-fire flex items-center justify-center shadow-sm border border-white"><i data-lucide="flame" class="text-white w-5 h-5 md:w-6 md:h-6"></i></div>
+                                        <span class="text-el-fire font-bold text-xs md:text-sm">火</span>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-2">
+                                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-el-earth flex items-center justify-center shadow-sm border border-white"><i data-lucide="mountain" class="text-white w-5 h-5 md:w-6 md:h-6"></i></div>
+                                        <span class="text-el-earth font-bold text-xs md:text-sm">土</span>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-2">
+                                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-el-metal flex items-center justify-center shadow-sm border border-white"><i data-lucide="diamond" class="text-white w-5 h-5 md:w-6 md:h-6"></i></div>
+                                        <span class="text-el-metal font-bold text-xs md:text-sm">金</span>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-2">
+                                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-el-water flex items-center justify-center shadow-sm border border-white"><i data-lucide="droplet" class="text-white w-5 h-5 md:w-6 md:h-6"></i></div>
+                                        <span class="text-el-water font-bold text-xs md:text-sm">水</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <button onclick="calculateElement()" class="w-full bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white font-bold py-4 rounded-full transition-all shadow-lg mt-6 text-xl">
-                            計算我的五行屬性
-                        </button>
                     </div>
                 </div>
 
-                <div id="result-container" class="flex flex-col items-center justify-center bg-stone-100/50 rounded-3xl p-8 min-h-[500px] border-2 border-dashed border-stone-200 overflow-hidden">
-                    <div id="result-placeholder" class="text-center text-stone-400 space-y-4">
-                        <i data-lucide="sparkles" class="w-16 h-16 mx-auto opacity-20"></i>
-                        <p class="text-xl font-serif">選擇你的生日，開啟專屬五行之旅</p>
+                <div id="result-container" class="flex flex-col h-full w-full">
+                    <div id="static-icons" class="flex flex-col gap-6 items-center justify-center flex-grow min-h-[400px]">
+                        <div class="grid grid-cols-5 gap-3 md:gap-6 w-full max-w-lg">
+                            <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-el-wood flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="leaf" class="text-white"></i></div><span class="text-el-wood font-bold">木</span></div>
+                            <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-el-fire flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="flame" class="text-white"></i></div><span class="text-el-fire font-bold">火</span></div>
+                            <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-el-earth flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="mountain" class="text-white"></i></div><span class="text-el-earth font-bold">土</span></div>
+                            <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-el-metal flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="diamond" class="text-white"></i></div><span class="text-el-metal font-bold">金</span></div>
+                            <div class="flex flex-col items-center gap-2"><div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-el-water flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="droplet" class="text-white"></i></div><span class="text-el-water font-bold">水</span></div>
+                        </div>
+                        <p class="text-xl lg:text-2xl text-stone-500 font-serif mt-4 text-center">選擇你的生日，開啟專屬五行之旅</p>
                     </div>
-                    <div id="result-content" class="hidden w-full h-full flex flex-col items-center"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 線上展覽區 -->
+    <!-- Exhibition Section -->
     <section id="exhibition" class="py-24 bg-white">
         <div class="container mx-auto px-6 md:px-12 lg:px-20">
             <div class="text-center mb-20 space-y-4">
-                <span class="bg-amber-100 text-amber-800 px-4 py-1 rounded-full text-sm font-bold tracking-wider uppercase">Virtual Exhibition</span>
-                <h2 class="text-4xl md:text-6xl font-serif font-bold text-stone-800">玩轉五行線上展</h2>
+                <span class="bg-amber-100 text-amber-800 px-4 py-1 rounded-full text-sm lg:text-base font-bold tracking-wider">線上展覽</span>
+                <h2 class="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-bold text-stone-800">玩轉五行</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-el-wood to-el-metal mx-auto"></div>
+                <p class="text-stone-500 text-lg lg:text-xl max-w-2xl mx-auto pt-4">在線上也能完整的參與年會展覽。每個展區都對應不同的五行能量，循著五行流轉，探索專屬於你的身心節奏。</p>
             </div>
-            <div id="exhibition-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="exhibition-grid"></div>
         </div>
     </section>
 
-    <!-- 頁尾 -->
-    <footer class="bg-stone-900 text-stone-400 py-16">
+    <!-- Footer -->
+    <footer id="footer" class="bg-stone-900 text-stone-400 py-16">
         <div class="container mx-auto px-6 md:px-12 lg:px-20">
-            <div class="grid md:grid-cols-2 gap-12 mb-12 border-b border-stone-800 pb-12">
-                <div class="space-y-4">
-                    <h3 class="text-white text-3xl font-serif">2026 臺灣精油芳療年會</h3>
-                    <p class="text-lg leading-relaxed max-w-md">致力於推廣正統芳香療法，結合東方五行哲學與西方科學實證。</p>
+            <div class="grid md:grid-cols-4 gap-12 mb-12 border-b border-stone-800 pb-12">
+                <div class="col-span-1 md:col-span-2 space-y-4">
+                    <h3 class="text-white text-2xl md:text-3xl lg:text-4xl font-serif">2026 臺灣精油芳療年會</h3>
+                    <p class="text-sm md:text-base lg:text-lg leading-relaxed max-w-md">致力於推廣正統芳香療法，結合東方五行哲學與西方科學實證，為現代人尋找身心平衡的自然處方。</p>
                 </div>
-                <div class="flex md:justify-end items-start gap-8">
-                    <div class="space-y-4">
-                        <h4 class="text-white font-bold tracking-wider uppercase">追蹤我們</h4>
-                        <div class="flex space-x-4">
-                            <a href="#" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                        </div>
+                <div class="space-y-4">
+                    <h4 class="text-white font-bold tracking-wider text-base md:text-lg lg:text-xl uppercase">快速連結</h4>
+                    <ul class="space-y-2 text-sm md:text-base lg:text-base">
+                        <li><a href="#" class="hover:text-amber-500">年會限定優惠</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-white font-bold tracking-wider text-base md:text-lg lg:text-xl uppercase">聯絡我們</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/ALIZTW" class="w-10 h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="https://www.instagram.com/aliz_aromacreator/" class="w-10 h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="https://lin.ee/ZwEOveq" class="w-10 h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white">
+                            <img src="https://img.shoplineapp.com/media/image_clips/6963d927032c2909a4ef40c7/original.png?1768151335=&owner_id=5caf39294d91a10001727c79" alt="LINE" class="w-[60%] h-[60%] object-contain">
+                        </a>
+                        <a href="https://www.aliztwshop.com/" class="w-10 h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white"><i data-lucide="globe" class="w-5 h-5"></i></a>
                     </div>
                 </div>
             </div>
-            <p class="text-sm">&copy; 2026 Taiwan Aromatherapy Conference. All Rights Reserved.</p>
+            <p class="text-xs md:text-sm lg:text-sm">&copy; 2026 Taiwan Aromatherapy Conference.</p>
         </div>
     </footer>
+    
+    <div id="export-root" style="position: fixed; left: -9999px; top: 0; pointer-events: none;"><div id="export-card"></div></div>
 
-    <!-- 隱藏的匯出區塊 -->
-    <div id="export-root" style="position: fixed; left: -9999px; top: 0; pointer-events: none;">
-        <div id="export-card"></div>
-    </div>
-
-    <script>
-        // --- Data & Constants ---
-        const EXHIBITION_DATA = [
-            { id: 'prologue', title: "光影序章", subtitle: "五行 x 靈數 x 體質", tag: "前導區域", color: "text-white", bgGradient: "from-stone-900 via-stone-800 to-stone-950", imageUrl: "https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?auto=format&fit=crop&w=1200&q=80" },
-            { id: 'wood', title: "木 · 生發之力", subtitle: "木之眼力｜文字尋找", tag: "木之展區", color: "text-emerald-100", bgGradient: "from-el-wood to-emerald-800", imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3813f52684d32c66f3b/original.jpg" },
-            { id: 'fire', title: "火 · 熱情之光", subtitle: "心之明辨｜數字反應", tag: "火之展區", color: "text-orange-100", bgGradient: "from-el-fire to-red-900", imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3872d2bf66a426ce590/original.jpg" },
-            { id: 'earth', title: "土 · 穩定之基", subtitle: "土之穩行｜指尖走線", tag: "土之展區", color: "text-yellow-100", bgGradient: "from-el-earth to-amber-900", imageUrl: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=800&q=80" },
-            { id: 'metal', title: "金 · 收斂之質", subtitle: "金之綿長｜出一口氣", tag: "金之展區", color: "text-yellow-100", bgGradient: "from-el-metal to-amber-800", imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3961e5e75d00618cd98/original.jpg" },
-            { id: 'water', title: "水 · 流動之韻", subtitle: "水之定力｜金雞獨立", tag: "水之展區", color: "text-blue-100", bgGradient: "from-el-water to-blue-900", imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a39d6dc52d7639694521/original.jpg" }
-        ];
-
-        const ELEMENT_MAPPING = {
-            1: { element: "木", constitution: "氣鬱x血瘀", title: "開創者", desc: "你是超級行動派，敢冒險、不服輸的開創先鋒。", color: "bg-el-wood", hex: "#8b934e", darkHex: "#5d6335", partner: { comp: "火", compDesc: "創意會被他的熱情點亮", conflict: "土", conflictDesc: "你的點子太多，他步調跟不上" } },
-            2: { element: "水", constitution: "陽虛x特稟", title: "協調者", desc: "你是細膩的傾聽者，擅長在人際中成為潤滑劑。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "直覺在靈感中再次流動", conflict: "火", conflictDesc: "你的冷靜，讓他熱情澆熄" } },
-            3: { element: "火", constitution: "陰虛x濕熱", title: "行動家", desc: "你用熱情點亮世界，擁有點燃氣氛的感染力。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "熱情太旺，他需要時間消化" } },
-            4: { element: "土", constitution: "氣虛x痰濕", title: "穩固者", desc: "你是注重細節、務實可靠，能把理想落地的人。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "務實會被他的調理放大", conflict: "水", conflictDesc: "關懷過滿，反而讓他喘不過氣" } },
-            5: { element: "火", constitution: "陰虛x濕熱", title: "探索者", desc: "你對新鮮事物充滿好奇，勇於打破框架前行。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "熱情太旺，他需要時間消化" } },
-            6: { element: "土", constitution: "氣虛x痰濕", title: "照顧者", desc: "你樂於照顧他人，是溫暖又包容的療癒存在。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "務實會被他的調理放大", conflict: "水", conflictDesc: "關懷過滿，反而讓他喘過氣" } },
-            7: { element: "金", constitution: "氣虛x特稟", title: "思考者", desc: "你善於冷靜分析與探索真理，是天生的洞察者。", color: "bg-el-metal", hex: "#deab47", darkHex: "#9e7a32", partner: { comp: "水", compDesc: "理性在柔軟裡變得圓融", conflict: "木", conflictDesc: "標準太高，讓他創意難伸展" } },
-            8: { element: "金", constitution: "氣虛x特稟", title: "實踐者", desc: "你是統籌全局，化理想為現實的執行高手。", color: "bg-el-metal", hex: "#deab47", darkHex: "#9e7a32", partner: { comp: "水", compDesc: "理性在柔軟裡變得圓融", conflict: "木", conflictDesc: "標準太高，讓他創意難伸展" } },
-            9: { element: "水", constitution: "陽虛x特稟", title: "奉獻者", desc: "你有強烈的使命感，願為世界付出與療癒他人。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "直覺在靈感中再次流動", conflict: "火", conflictDesc: "冷靜過深，讓熱情澆熄" } }
-        };
-
-        const LOGO_URL = "https://img.shoplineapp.com/media/image_clips/693fd310ce43e58dabfdaa56/original.png";
-        let currentResult = null;
-
-        // --- Core Functions ---
-
-        window.scrollToSection = (id) => {
-            document.getElementById('mobile-menu').classList.add('hidden');
-            const el = document.getElementById(id);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-        };
-
-        window.calculateElement = () => {
-            const y = document.getElementById('year-select').value;
-            const m = document.getElementById('month-select').value;
-            const d = document.getElementById('day-select').value;
-            if (!y || !m || !d) { alert("請完整選擇出生日期"); return; }
-            
-            let sum = 0;
-            const fullStr = y + m + d;
-            for (let char of fullStr) sum += parseInt(char);
-            while (sum > 9) {
-                let temp = 0;
-                String(sum).split('').forEach(n => temp += parseInt(n));
-                sum = temp;
-            }
-            
-            currentResult = { ...ELEMENT_MAPPING[sum], number: sum };
-            renderResult(sum, currentResult);
-            incrementParticipant();
-        };
-
-        function renderResult(number, data) {
-            document.getElementById('result-placeholder').classList.add('hidden');
-            const content = document.getElementById('result-content');
-            content.classList.remove('hidden');
-            
-            content.innerHTML = `
-                <div class="w-full flex flex-col justify-between animate-fade-in-up">
-                    <div class="relative w-full max-w-[340px] mx-auto ${data.color} text-white rounded-[24px] shadow-2xl p-8 flex flex-col items-center">
-                        <img src="${LOGO_URL}" class="h-8 brightness-0 invert mb-4">
-                        <div class="text-xs tracking-widest opacity-80 mb-6 uppercase">2026 臺灣精油芳療年會</div>
-                        <div class="bg-white/10 px-4 py-1 rounded-full border border-white/20 mb-4 text-sm font-medium tracking-wider">生命靈數：<span class="font-bold text-lg font-serif">${number}</span></div>
-                        <h2 class="text-3xl font-serif font-bold mb-6 tracking-widest">${data.title}</h2>
-                        <div class="grid grid-cols-2 gap-8 w-full mb-6">
-                            <div class="text-center"><div class="opacity-60 text-xs mb-1">五行屬性</div><div class="text-2xl font-serif font-bold">${data.element}</div></div>
-                            <div class="text-center"><div class="opacity-60 text-xs mb-1">對應體質</div><div class="text-xl font-bold">${data.constitution}</div></div>
-                        </div>
-                        <p class="text-center text-sm leading-relaxed opacity-95 mb-4">${data.desc}</p>
-                    </div>
-                    <div class="flex flex-col items-center gap-4 mt-8">
-                        <div class="flex gap-4">
-                            <button onclick="location.reload()" class="bg-white border px-6 py-3 rounded-full shadow-md text-stone-600 flex items-center gap-2 transition-all hover:bg-stone-50"><i data-lucide="refresh-cw" class="w-4 h-4"></i> 重選</button>
-                            <button onclick="downloadShareImage()" id="download-btn" class="bg-stone-800 px-6 py-3 rounded-full shadow-md text-white flex items-center gap-2 transition-all hover:bg-stone-700"><i data-lucide="share-2" class="w-4 h-4"></i> 分享圖卡</button>
-                        </div>
-                        <p class="text-xs text-stone-400">點擊下載分享至 IG，找到你的合拍夥伴。</p>
-                    </div>
-                </div>
-            `;
-            lucide.createIcons();
-        }
-
-        async function downloadShareImage() {
-            if (!currentResult) return;
-            const btn = document.getElementById('download-btn');
-            const originalHtml = btn.innerHTML;
-            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> 處理中...`;
-            lucide.createIcons();
-            btn.disabled = true;
-
-            try {
-                // 渲染隱藏卡片
-                renderExportCard(currentResult);
-                const exportEl = document.getElementById('export-card');
-                exportEl.classList.add('export-mode');
-
-                // 等待字體載入
-                if (document.fonts) await document.fonts.ready;
-                await new Promise(r => setTimeout(r, 600));
-
-                const canvas = await html2canvas(exportEl, {
-                    scale: 2, useCORS: true, logging: false, width: 1080, height: 1920
-                });
-
-                canvas.toBlob(async (blob) => {
-                    const userAgent = navigator.userAgent;
-                    const isMobile = /iPhone|iPod|Android.*Mobile/i.test(userAgent);
-                    const isSamsung = /Samsung|SM-|SAMSUNG/i.test(userAgent) || /SamsungBrowser/i.test(userAgent);
-                    const file = new File([blob], "aliz-result.png", { type: "image/png" });
-
-                    const fallbackDownload = () => {
-                        const url = URL.createObjectURL(blob);
-                        if (isMobile && isSamsung) {
-                            window.open(url, '_blank');
-                            setTimeout(() => URL.revokeObjectURL(url), 60000);
-                        } else {
-                            const a = document.createElement('a');
-                            a.href = url; a.download = 'aliz-analysis.png';
-                            document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                            URL.revokeObjectURL(url);
-                        }
-                    };
-
-                    if (isMobile && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                        try { await navigator.share({ files: [file], title: '2026 年會五行分析' }); }
-                        catch (e) { fallbackDownload(); }
-                    } else {
-                        fallbackDownload();
-                    }
-                    
-                    btn.innerHTML = originalHtml;
-                    btn.disabled = false;
-                    lucide.createIcons();
-                }, 'image/png');
-            } catch (err) {
-                console.error(err);
-                alert("產生圖片失敗，請重試");
-                btn.innerHTML = originalHtml;
-                btn.disabled = false;
-                lucide.createIcons();
-            }
-        }
-
-        function renderExportCard(data) {
-            const container = document.getElementById('export-card');
-            container.className = `${data.color} text-white export-mode tabular-nums`;
-            container.style.background = `linear-gradient(135deg, ${data.hex} 0%, ${data.darkHex} 100%)`;
-            container.innerHTML = `
-                <div class="flex flex-col items-center w-full">
-                    <img src="${LOGO_URL}" class="h-[80px] brightness-0 invert mb-6">
-                    <h2 class="text-[36px] font-light tracking-[0.4em] opacity-90 uppercase">2026 臺灣精油芳療年會</h2>
-                </div>
-                <div class="flex flex-col items-center gap-[60px] w-full">
-                    <div class="flex items-center gap-8 px-12 py-6 rounded-full border-[3px] border-white/30 bg-white/10">
-                        <span class="text-[44px]">生命靈數：<span class="font-bold text-[64px] font-serif">${data.number}</span></span>
-                        <h1 class="text-[90px] font-serif font-bold tracking-widest pl-10 border-l border-white/30 leading-tight">${data.title}</h1>
-                    </div>
-                    <div class="flex justify-around w-full px-20">
-                        <div class="text-center"><span class="opacity-80 text-[32px] mb-4 block tracking-widest">五行屬性</span><span class="text-[96px] font-serif font-bold">${data.element}</span></div>
-                        <div class="text-center"><span class="opacity-80 text-[32px] mb-4 block tracking-widest">對應體質</span><span class="text-[80px] font-serif font-bold">${data.constitution}</span></div>
-                    </div>
-                </div>
-                <div class="w-full p-16 bg-white/10 rounded-[60px] border-[3px] border-white/20">
-                    <p class="text-center leading-[1.8] font-light text-[40px] opacity-95">${data.desc}</p>
-                </div>
-                <div class="flex flex-col gap-6 w-full">
-                    <div class="bg-white/20 rounded-[80px] p-10 flex items-center gap-12 border-[3px] border-white/20">
-                        <span class="text-[160px] font-serif font-bold">${data.partner.comp}</span>
-                        <div class="flex flex-col gap-2">
-                            <span class="bg-white text-stone-800 text-[28px] font-bold px-8 py-2 rounded-full w-fit tracking-widest uppercase">合拍夥伴</span>
-                            <p class="text-[36px] font-medium tracking-wide">${data.partner.compDesc}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-[28px] font-light tracking-widest opacity-60">© 2026 Taiwan Aromatherapy Conference</div>
-            `;
-        }
-
-        function incrementParticipant() {
-            let count = parseInt(localStorage.getItem('aliz_visitors') || "0") + 1;
-            localStorage.setItem('aliz_visitors', count);
-            animateCounter(count);
-        }
-
-        function animateCounter(target) {
-            const el = document.getElementById('participant-count');
-            let start = 0;
-            const step = () => {
-                start += Math.ceil((target - start) / 10);
-                if (start >= target) el.innerText = target.toLocaleString();
-                else { el.innerText = start.toLocaleString(); requestAnimationFrame(step); }
-            };
-            requestAnimationFrame(step);
-        }
-
-        // --- Init ---
-
-        window.addEventListener('DOMContentLoaded', () => {
-            // 下拉選單初始化
-            const yearSel = document.getElementById('year-select');
-            const monthSel = document.getElementById('month-select');
-            const daySel = document.getElementById('day-select');
-            
-            for (let i = 2024; i >= 1940; i--) yearSel.add(new Option(i, i));
-            for (let i = 1; i <= 12; i++) monthSel.add(new Option(i.toString().padStart(2, '0'), i));
-            for (let i = 1; i <= 31; i++) daySel.add(new Option(i.toString().padStart(2, '0'), i));
-
-            // 手機選單切換
-            document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.toggle('hidden');
-            });
-
-            // 線上展覽卡片
-            const grid = document.getElementById('exhibition-grid');
-            grid.innerHTML = EXHIBITION_DATA.map(item => `
-                <div class="group relative overflow-hidden rounded-[2rem] h-[450px] cursor-pointer shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                    <img src="${item.imageUrl}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t ${item.bgGradient} opacity-80 mix-blend-multiply group-hover:opacity-90 transition-opacity"></div>
-                    <div class="absolute inset-0 p-8 flex flex-col justify-end text-white">
-                        <span class="bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-xs font-bold w-fit mb-4 border border-white/10 uppercase tracking-widest">${item.tag}</span>
-                        <h3 class="text-4xl font-serif font-bold mb-2 drop-shadow-md">${item.title}</h3>
-                        <p class="text-white/80 text-lg mb-6 font-light">${item.subtitle}</p>
-                        <button class="flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-3 rounded-full w-fit hover:bg-white/40 transition-colors border border-white/20 group-hover:pl-8">
-                            進入體驗 <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-
-            // 計數器初始化
-            animateCounter(parseInt(localStorage.getItem('aliz_visitors') || "2561"));
-
-            // 滾動效果
-            window.addEventListener('scroll', () => {
-                const nav = document.getElementById('navbar');
-                if (window.scrollY > 50) nav.classList.add('bg-stone-900/95', 'backdrop-blur-md', 'shadow-lg', 'py-3');
-                else nav.classList.remove('bg-stone-900/95', 'backdrop-blur-md', 'shadow-lg', 'py-3');
-            });
-
-            lucide.createIcons();
-        });
-
-    </script>
+    <!-- Main Logic -->
+    <script type="module" src="index.tsx"></script>
 </body>
 </html>
