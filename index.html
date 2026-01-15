@@ -78,6 +78,20 @@
         ::-webkit-scrollbar-thumb { background: #57534e; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
 
+        /* app-container definition to align with fire.html while keeping original container config for other sections */
+        .app-container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        @media (min-width: 640px) { .app-container { padding-left: 2rem; padding-right: 2rem; } }
+        @media (min-width: 768px) { .app-container { padding-left: 3rem; padding-right: 3rem; } }
+        @media (min-width: 1024px) { .app-container { max-width: 960px; padding-left: 4rem; padding-right: 4rem; } }
+        @media (min-width: 1280px) { .app-container { max-width: 1140px; padding-left: 5rem; padding-right: 5rem; } }
+        @media (min-width: 1366px) { .app-container { max-width: 1200px; padding-left: 2rem; padding-right: 2rem; } }
+
         /* Animations */
         @keyframes fade-in-up {
             from { opacity: 0; transform: translateY(20px); }
@@ -157,24 +171,27 @@
 }
 </script>
 </head>
-<body class="bg-stone-50 text-stone-800 selection:bg-amber-200 selection:text-amber-900">
+<body class="bg-stone-50 text-stone-800 selection:bg-amber-200 selection:text-amber-900 text-left">
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 laptop:py-6 bg-transparent">
-        <div class="container flex justify-between items-center text-white">
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent py-6">
+        <div id="nav-container" class="app-container flex justify-between items-center text-white transition-colors duration-300">
             <!-- Logo -->
-            <div class="flex items-center space-x-2 cursor-pointer" onclick="window.scrollToSection('hero')">
+            <a href="https://aliztw.github.io/2026-taiwan-aromatherapy-conference/">
+            <div class="flex items-center space-x-2 cursor-pointer">
                 <img src="https://img.shoplineapp.com/media/image_clips/693fd310ce43e58dabfdaa56/original.png?1765790479=&owner_id=5caf39294d91a10001727c79" alt="Logo" class="w-8 h-8 laptop:w-10 laptop:h-10 object-contain">
                 <div class="flex flex-col">
                     <span class="font-serif text-base laptop:text-2xl font-bold leading-none tracking-widest">2026臺灣精油芳療年會</span>
-                    <span class="text-[10px] laptop:text-xs tracking-wider opacity-80">Taiwan Aromatherapy Conference</span>
+                    <span class="text-[10px] laptop:text-xs tracking-wider">Taiwan Aromatherapy Conference</span>
                 </div>
             </div>
+            </a>
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center space-x-6 laptop:space-x-8">
-                <button onclick="window.scrollToSection('calculator')" class="hover:text-amber-400 transition-colors text-sm laptop:text-base tracking-widest">生命靈數計算</button>
-                <button onclick="window.scrollToSection('exhibition')" class="hover:text-amber-400 transition-colors text-sm laptop:text-base tracking-widest">線上展覽</button>
+                <button onclick="window.scrollToSection('hero')" class="hover:text-amber-400 transition-colors text-sm lg:text-base tracking-widest font-medium">回頂部</button>
+                <button onclick="window.scrollToSection('calculator')" class="hover:text-amber-400 transition-colors text-sm lg:text-base tracking-widest font-medium">生命靈數計算</button>
+                <button onclick="window.scrollToSection('exhibition')" class="hover:text-amber-400 transition-colors text-sm lg:text-base tracking-widest font-medium">線上展覽</button>
             </div>
 
             <!-- Mobile Toggle -->
@@ -187,13 +204,13 @@
 
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-stone-900 border-t border-stone-800 p-6 flex flex-col space-y-4 shadow-xl">
+            <button onclick="window.scrollToSection('hero')" class="text-left text-white hover:text-amber-400 py-2">回頂部</button>
             <button onclick="window.scrollToSection('calculator')" class="text-left text-white hover:text-amber-400 py-2">生命靈數計算</button>
             <button onclick="window.scrollToSection('exhibition')" class="text-left text-white hover:text-amber-400 py-2">線上展覽</button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <!-- 降低 Hero Padding 並增加 Laptop 優化 -->
     <section id="hero" class="relative w-full min-h-screen md:min-h-0 md:h-auto laptop:h-[85vh] 2xl:h-screen flex flex-col justify-start md:justify-start lg:justify-center overflow-hidden bg-stone-900 pt-24 md:pt-32 lg:pt-0 pb-12 md:pb-32 lg:pb-0">
         <!-- Background -->
         <div class="absolute inset-0 z-0">
@@ -224,7 +241,7 @@
                 <div class="w-full flex flex-col items-center gap-4 laptop:gap-6">
                   <!-- Title Image -->
                   <div class="w-full flex justify-center">
-                    <img src="https://img.shoplineapp.com/media/image_clips/6952512a69f3479d1562bb2a/original.png?1767002410=&owner_id=5caf39294d91a10001727c79" alt="玩轉五行" class="w-[60%] laptop:w-[50%] drop-shadow-2xl h-auto object-contain">
+                    <img src="https://img.shoplineapp.com/media/image_clips/6952512a69f3479d1562bb2a/original.png?1767002410=&owner_id=5caf39294d91a10001727c79" alt="玩轉五行" class="w-[50%] laptop:w-[40%] drop-shadow-2xl h-auto object-contain">
                     <h1 class="sr-only">光影流芳 玩轉五行</h1>
                   </div>
 
@@ -236,7 +253,7 @@
                 </div>
 
                 <!-- Description (Mobile) -->
-                <div class="glass-card p-6 rounded-3xl text-white/90 shadow-2xl backdrop-blur-md border border-white/20 md:hidden w-full max-w-lg">
+                <div class="glass-card p-6 rounded-3xl text-white/90 shadow-2xl backdrop-blur-md border border-white/20 md:hidden w-full max-w-lg text-left">
                     <p class="text-sm leading-relaxed font-light">
                         每個人都有專屬的五行能量密碼，透過生命靈數，找到你與精油的共振頻率。在光影交織中，感受<span class="text-el-wood font-bold">木的生發</span>、<span class="text-el-fire font-bold">火的熱情</span>、<span class="text-el-earth font-bold">土的穩定</span>、<span class="text-el-metal font-bold">金的收斂</span>、<span class="text-el-water font-bold">水的流動</span>。
                     </p>
@@ -245,7 +262,7 @@
 
             <!-- Right Column (Desktop Only) -->
             <div class="hidden md:block animate-fade-in-up" style="animation-delay: 0.2s;">
-                <div class="glass-card p-6 laptop:p-8 rounded-3xl text-white/90 shadow-2xl max-w-sm laptop:max-w-md ml-auto">
+                <div class="glass-card p-6 laptop:p-8 rounded-3xl text-white/90 shadow-2xl max-w-sm laptop:max-w-md ml-auto text-left">
                     <p class="text-base laptop:text-lg xl:text-2xl leading-relaxed font-light">
                         每個人都有專屬的五行能量密碼，透過生命靈數，找到你與精油的共振頻率。在光影交織中，感受<span class="text-el-wood font-bold">木的生發</span>、<span class="text-el-fire font-bold">火的熱情</span>、<span class="text-el-earth font-bold">土的穩定</span>、<span class="text-el-metal font-bold">金的收斂</span>、<span class="text-el-water font-bold">水的流動</span>。
                     </p>
@@ -267,14 +284,14 @@
         <div class="absolute top-0 right-0 w-48 h-48 laptop:w-64 laptop:h-64 bg-el-wood/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 laptop:w-96 laptop:h-96 bg-el-metal/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
-        <div class="container relative z-10">
+        <div class="container relative z-10 text-center">
             <div class="flex flex-col items-center mb-12 laptop:mb-16">
                 <h2 class="text-6xl md:text-9xl laptop:text-[10rem] xl:text-[12rem] font-serif text-stone-800 opacity-10 absolute top-[-30px] laptop:top-[-40px] select-none">01</h2>
                 <h2 class="text-3xl md:text-5xl laptop:text-6xl xl:text-7xl font-serif font-bold text-stone-800 mb-4 relative">生命靈數計算</h2>
                 <div class="w-20 h-1 bg-gradient-to-r from-el-wood to-el-metal"></div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8 laptop:gap-24 items-stretch max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 laptop:gap-24 items-stretch max-w-5xl mx-auto text-left">
                 <div class="flex flex-col h-full">
                     <div class="bg-white p-6 md:p-10 laptop:p-12 rounded-3xl shadow-xl shadow-stone-200/50 border border-stone-100 h-full flex flex-col">
                         <div class="space-y-4 laptop:space-y-6">
@@ -364,7 +381,7 @@
 
     <!-- Exhibition Section -->
     <section id="exhibition" class="py-16 laptop:py-24 bg-white">
-        <div class="container">
+        <div class="container text-center">
             <div class="text-center mb-12 laptop:mb-20 space-y-3 laptop:space-y-4">
                 <span class="bg-amber-100 text-amber-800 px-3 py-0.5 laptop:px-4 laptop:py-1 rounded-full text-xs laptop:text-base font-bold tracking-wider uppercase">Virtual Exhibition</span>
                 <h2 class="text-3xl md:text-6xl laptop:text-7xl xl:text-8xl font-serif font-bold text-stone-800">玩轉五行</h2>
@@ -372,37 +389,39 @@
                 <p class="text-stone-500 text-base laptop:text-xl max-w-2xl mx-auto pt-2 laptop:pt-4">在線上也能完整的參與年會展覽。每個展區都對應不同的五行能量，循著五行流轉，探索專屬於你的身心節奏。</p>
             </div>
             <!-- 三欄卡片區域受 container 限制，避免寬螢幕下撐太開 -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 laptop:gap-8" id="exhibition-grid"></div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 laptop:gap-8 text-left" id="exhibition-grid"></div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="footer" class="bg-stone-900 text-stone-400 py-12 laptop:py-16">
-        <div class="container">
-            <div class="grid md:grid-cols-4 gap-8 laptop:gap-12 mb-8 laptop:mb-12 border-b border-stone-800 pb-8 laptop:pb-12">
-                <div class="col-span-1 md:col-span-2 space-y-3 laptop:space-y-4">
-                    <h3 class="text-white text-xl laptop:text-3xl lg:text-4xl font-serif">2026 臺灣精油芳療年會</h3>
-                    <p class="text-xs laptop:text-base lg:text-lg leading-relaxed max-w-md">致力於推廣正統芳香療法，結合東方五行哲學與西方科學實證，為現代人尋找身心平衡的自然處方。</p>
+    <footer id="footer" class="bg-stone-900 text-stone-400 py-16 mt-auto">
+        <div class="app-container">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12 border-b border-stone-800 pb-12">
+                <div class="col-span-1 md:col-span-2 space-y-4">
+                    <h3 class="text-white text-2xl md:text-3xl lg:text-4xl font-serif">2026 台灣精油芳療年會</h3>
+                    <p class="text-sm md:text-base lg:text-lg leading-relaxed max-w-md">致力於推廣正統芳香療法，結合東方五行哲學與西方科學實證，為現代人尋找身心平衡的自然處方。</p>
                 </div>
-                <div class="space-y-3 laptop:space-y-4">
-                    <h4 class="text-white font-bold tracking-wider text-sm laptop:text-lg lg:text-xl uppercase">快速連結</h4>
-                    <ul class="space-y-1 laptop:space-y-2 text-xs laptop:text-base lg:text-base">
-                        <li><a href="#" class="hover:text-amber-500 transition-colors">年會限定優惠</a></li>
+                <div class="space-y-4">
+                    <h4 class="text-white font-bold tracking-wider text-base md:text-lg lg:text-xl uppercase">快速連結</h4>
+                    <ul class="space-y-2 text-sm md:text-base lg:text-base">
+                        <li><a href="#" class="hover:text-amber-500">年會限定優惠</a></li>
                     </ul>
                 </div>
-                <div class="space-y-3 laptop:space-y-4">
-                    <h4 class="text-white font-bold tracking-wider text-sm laptop:text-lg lg:text-xl uppercase">聯絡我們</h4>
-                    <div class="flex space-x-3 laptop:space-x-4">
-                        <a href="https://www.facebook.com/ALIZTW" class="w-8 h-8 laptop:w-11 laptop:h-11 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors"><i data-lucide="facebook" class="w-4 h-4 laptop:w-5 laptop:h-5"></i></a>
-                        <a href="https://www.instagram.com/aliz_aromacreator/" class="w-8 h-8 laptop:w-11 laptop:h-11 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors"><i data-lucide="instagram" class="w-4 h-4 laptop:w-5 laptop:h-5"></i></a>
-                        <a href="https://lin.ee/ZwEOveq" class="w-8 h-8 laptop:w-11 laptop:h-11 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors">
-                            <img src="https://img.shoplineapp.com/media/image_clips/6963d927032c2909a4ef40c7/original.png?1768151335=&owner_id=5caf39294d91a10001727c79" alt="LINE" class="w-[60%] h-[60%] object-contain">
+                <div class="space-y-4">
+                    <h4 class="text-white font-bold tracking-wider text-base md:text-lg lg:text-xl uppercase">聯絡我們</h4>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://www.facebook.com/ALIZTW" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="https://www.instagram.com/aliz_aromacreator/" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="https://lin.ee/ZwEOveq" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white overflow-hidden group transition-all">
+                            <div class="w-full h-full flex items-center justify-center text-xs font-bold">LINE</div>
                         </a>
-                        <a href="https://www.aliztwshop.com/" class="w-8 h-8 laptop:w-11 laptop:h-11 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors"><i data-lucide="globe" class="w-4 h-4 laptop:w-5 laptop:h-5"></i></a>
+                        <a href="https://www.aliztwshop.com/" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all"><i data-lucide="globe" class="w-5 h-5"></i></a>
                     </div>
                 </div>
             </div>
-            <p class="text-[10px] laptop:text-sm">&copy; 2026 Taiwan Aromatherapy Conference.</p>
+            <div class="flex justify-between text-xs md:text-sm lg:text-sm">
+                <p>&copy; 2026 Taiwan Aromatherapy Conference.</p>
+            </div>
         </div>
     </footer>
     
@@ -422,52 +441,64 @@
                 tag: "前導區域",
                 color: "text-white",
                 bgGradient: "from-stone-900 via-stone-800 to-stone-950",
-                imageUrl: "https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?auto=format&fit=crop&w=1200&q=80"
+                imageUrl: "https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?auto=format&fit=crop&w=1200&q=80",
+                link: "https://aliztw.github.io/indro/",
+                type: "prologue"
             },
             {
                 id: 'wood',
                 title: "木 · 生發之力",
                 subtitle: "包含：木之眼力｜文字尋找",
                 tag: "木之展區",
-                color: "text-emerald-100",
+                color: "text-white",
                 bgGradient: "from-el-wood to-emerald-800",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3813f52684d32c66f3b/original.jpg?1765385089=&owner_id=5caf39294d91a10001727c79"
+                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3813f52684d32c66f3b/original.jpg?1765385089=&owner_id=5caf39294d91a10001727c79",
+                link: "https://aliztw.github.io/wood/",
+                type: "experience"
             },
             {
                 id: 'fire',
                 title: "火 · 熱情之光",
                 subtitle: "包含：心之明辨｜數字反應",
                 tag: "火之展區",
-                color: "text-orange-100",
+                color: "text-white",
                 bgGradient: "from-el-fire to-red-900",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3872d2bf66a426ce590/original.jpg?1765385094=&owner_id=5caf39294d91a10001727c79"
+                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3872d2bf66a426ce590/original.jpg?1765385094=&owner_id=5caf39294d91a10001727c79",
+                link: "https://aliztw.github.io/fire/",
+                type: "experience"
             },
             {
                 id: 'earth',
                 title: "土 · 穩定之基",
                 subtitle: "包含：土之穩行｜指尖走線",
                 tag: "土之展區",
-                color: "text-yellow-100",
+                color: "text-white",
                 bgGradient: "from-el-earth to-amber-900",
-                imageUrl: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=800&q=80"
+                imageUrl: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=800&q=80",
+                link: "https://aliztw.github.io/earth/",
+                type: "experience"
             },
             {
                 id: 'metal',
                 title: "金 · 收斂之質",
                 subtitle: "包含：金之綿長｜出一口氣",
                 tag: "金之展區",
-                color: "text-yellow-100",
+                color: "text-white",
                 bgGradient: "from-el-metal to-amber-800",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3961e5e75d00618cd98/original.jpg?1765385110=&owner_id=5caf39294d91a10001727c79"
+                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3961e5e75d00618cd98/original.jpg?1765385110=&owner_id=5caf39294d91a10001727c79",
+                link: "https://aliztw.github.io/gold/",
+                type: "experience"
             },
             {
                 id: 'water',
                 title: "水 · 流動之韻",
                 subtitle: "包含：水之定力｜金雞獨立",
                 tag: "水之展區",
-                color: "text-blue-100",
+                color: "text-white",
                 bgGradient: "from-el-water to-blue-900",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a39d6dc52d7639694521/original.jpg?1765385116=&owner_id=5caf39294d91a10001727c79"
+                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a39d6dc52d7639694521/original.jpg?1765385116=&owner_id=5caf39294d91a10001727c79",
+                link: "https://aliztw.github.io/water/",
+                type: "experience"
             }
         ];
 
@@ -648,8 +679,6 @@
         function renderExhibition() {
             const grid = document.getElementById('exhibition-grid');
             grid.innerHTML = EXHIBITION_DATA.map(item => {
-                const isPrologue = item.id === 'prologue';
-                
                 return `
                 <div class="group relative isolate overflow-hidden rounded-[2rem] h-[400px] laptop:h-[500px] cursor-pointer shadow-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-stone-100 bg-stone-100" style="-webkit-tap-highlight-color: transparent;">
                     <img src="${item.imageUrl}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
@@ -657,7 +686,7 @@
                     <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60"></div>
                     <div class="absolute inset-0 p-6 laptop:p-8 flex flex-col justify-between z-10 text-left">
                         <div class="flex justify-start">
-                            ${isPrologue ? `
+                            ${item.type === 'prologue' ? `
                                 <div class="relative flex items-center gap-2 bg-gradient-to-r from-amber-500 via-yellow-600 to-amber-500 text-white px-4 py-1.5 laptop:px-5 laptop:py-2 rounded-full text-[9px] laptop:text-xs font-black tracking-[0.2em] shadow-lg shadow-amber-900/50 uppercase overflow-hidden">
                                     <div class="absolute inset-0 animate-shimmer"></div>
                                     <div class="relative flex items-center gap-2">
@@ -671,9 +700,9 @@
                         <div class="transform translate-y-4 transition-transform duration-500 group-hover:translate-y-0">
                             <h3 class="text-3xl laptop:text-5xl font-serif font-bold mb-2 ${item.color} drop-shadow-md">${item.title}</h3>
                             <p class="text-white/80 text-sm laptop:text-xl mb-6 laptop:mb-8 font-light tracking-wide">${item.subtitle}</p>
-                            <button class="flex items-center gap-2 bg-white/20 hover:bg-white/30 active:bg-white/40 backdrop-blur-md border border-white/40 text-white px-5 py-2 laptop:px-6 laptop:py-3 rounded-full transition-all duration-300 group-hover:pl-8 outline-none text-xs laptop:text-base">
-                                ${isPrologue ? '進入了解' : '進入體驗'} <i data-lucide="arrow-right" class="w-3 laptop:w-4 h-3 laptop:h-4"></i>
-                            </button>
+                            <a href="${item.link}" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 active:bg-white/40 backdrop-blur-md border border-white/40 text-white px-5 py-2 laptop:px-6 laptop:py-3 rounded-full transition-all duration-300 group-hover:pl-8 outline-none text-xs laptop:text-base font-medium">
+                                ${item.type === 'prologue' ? '進入了解' : '進入體驗'} <i data-lucide="arrow-right" class="w-3 laptop:w-4 h-3 laptop:h-4"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -686,7 +715,7 @@
             const container = document.getElementById('result-container');
             const formattedConstitution = data.constitution.replace(/x/g, '<span class="font-sans mx-1 font-medium opacity-80">x</span>');
             container.innerHTML = `
-                <div class="w-full h-full flex flex-col justify-between animate-fade-in-up tabular-nums">
+                <div class="w-full h-full flex flex-col justify-between animate-fade-in-up tabular-nums text-left">
                     <div id="result-card" class="relative w-full max-w-[320px] laptop:max-w-[360px] mx-auto ${data.color} text-white rounded-[24px] shadow-2xl overflow-hidden flex flex-col items-center flex-grow" style="min-height: 520px; laptop:min-height: 580px;">
                         <div class="pt-8 laptop:pt-10 flex flex-col items-center">
                             <img src="${LOGO_CARD_URL}" alt="ALIZ Logo" class="h-6 laptop:h-10 object-contain brightness-0 invert mb-2">
@@ -723,14 +752,14 @@
         function renderExportCard(data) {
             const container = document.getElementById('export-card');
             const formattedConstitution = data.constitution.replace(/x/g, '<span class="font-sans mx-2 font-medium opacity-80">x</span>');
-            container.className = `${data.color} text-white export-mode tabular-nums`;
+            container.className = `${data.color} text-white export-mode tabular-nums text-left`;
             container.style.background = `linear-gradient(135deg, ${data.hex} 0%, ${data.darkHex} 100%)`;
             container.innerHTML = `
-                <div class="flex flex-col items-center w-full"><img src="${LOGO_CARD_URL}" class="h-[80px] brightness-0 invert mb-4"><h2 class="text-[32px] font-light tracking-[0.3em] opacity-90 uppercase">2026 臺灣精油芳療年會</h2></div>
+                <div class="flex flex-col items-center w-full"><img src="${LOGO_CARD_URL}" class="h-[80px] brightness-0 invert mb-4"><h2 class="text-[32px] font-light tracking-[0.3em] opacity-90 uppercase text-center">2026 臺灣精油芳療年會</h2></div>
                 <div class="flex flex-col items-center w-full gap-[60px] mt-10"><div class="flex items-center gap-8 px-[60px] py-[30px] rounded-full border-[3px] border-white/30 bg-white/10"><div class="flex items-center gap-4"><span class="text-[40px]">生命靈數：</span><span class="font-bold text-[60px] font-serif">${data.number}</span></div><h1 class="text-[80px] font-serif font-bold tracking-widest leading-tight pl-8 border-l border-white/30">${data.title}</h1></div><div class="flex items-start justify-center w-full px-[20px]"><div class="flex flex-col items-center w-1/2 px-[20px]"><span class="opacity-90 font-light text-[36px] mb-[20px] tracking-widest">五行屬性</span><span class="text-[80px] font-serif font-bold tracking-widest leading-none">${data.element}</span></div><div class="flex flex-col items-center w-1/2 px-[20px]"><span class="opacity-90 font-light text-[36px] mb-[20px] tracking-widest">對應體質</span><span class="text-[80px] font-serif font-bold tracking-wide leading-none whitespace-nowrap">${formattedConstitution}</span></div></div></div>
                 <div class="w-full p-[60px] bg-white/10 rounded-[50px] border-[3px] border-white/20"><p class="text-center leading-loose font-light text-[36px] opacity-95">${data.description}</p></div>
-                <div class="w-full space-y-8 mb-10"><div class="bg-white/20 rounded-[60px] p-[60px] flex items-center gap-[60px] border-[3px] border-white/20"><span class="text-[160px] font-serif font-bold">${data.partner.comp}</span><div class="flex flex-col gap-4"><span class="bg-white text-stone-800 text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest">合拍夥伴</span><p class="text-[36px] font-medium tracking-wide">${data.partner.compDesc}</p></div></div><div class="bg-white/10 rounded-[60px] p-[60px] flex items-center gap-[60px] border-[3px] border-white/10"><span class="text-[160px] font-serif font-bold opacity-80">${data.partner.conflict}</span><div class="flex flex-col gap-4"><span class="bg-white/20 text-white text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest">磨合夥伴</span><p class="text-[36px] font-medium tracking-wide opacity-80">${data.partner.conflictDesc}</p></div></div></div>
-                <div class="text-[24px] font-light tracking-widest opacity-60">© 2026 Taiwan Aromatherapy Conference</div>
+                <div class="w-full space-y-8 mb-10 text-left"><div class="bg-white/20 rounded-[60px] p-[60px] flex items-center gap-[60px] border-[3px] border-white/20"><span class="text-[160px] font-serif font-bold">${data.partner.comp}</span><div class="flex flex-col gap-4"><span class="bg-white text-stone-800 text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest">合拍夥伴</span><p class="text-[36px] font-medium tracking-wide">${data.partner.compDesc}</p></div></div><div class="bg-white/10 rounded-[60px] p-[60px] flex items-center gap-[60px] border-[3px] border-white/10"><span class="text-[160px] font-serif font-bold opacity-80">${data.partner.conflict}</span><div class="flex flex-col gap-4"><span class="bg-white/20 text-white text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest">磨合夥伴</span><p class="text-[36px] font-medium tracking-wide opacity-80">${data.partner.conflictDesc}</p></div></div></div>
+                <div class="text-[24px] font-light tracking-widest opacity-60 text-center w-full">© 2026 Taiwan Aromatherapy Conference</div>
             `;
         }
 
@@ -743,15 +772,14 @@
             const monthSelect = document.getElementById('month-select');
             const daySelect = document.getElementById('day-select');
 
-            // Scroll effect
+            // Scroll effect logic updated to match fire.html py-4 / py-6
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
-                    navbar.classList.add('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg');
-                    navbar.classList.remove('py-4', 'laptop:py-6');
-                    navbar.classList.add('py-3');
+                    navbar.classList.add('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg', 'py-4');
+                    navbar.classList.remove('py-6');
                 } else {
-                    navbar.classList.remove('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg', 'py-3');
-                    navbar.classList.add('py-4', 'laptop:py-6');
+                    navbar.classList.remove('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg', 'py-4');
+                    navbar.classList.add('py-6');
                 }
             });
 
