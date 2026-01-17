@@ -163,14 +163,20 @@
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            /* 將生命靈數與主標題高度同步並置中 */
-            padding-bottom: 52px !important;
+            /* 針對主膠囊進行垂直置中補償 */
+            padding-bottom: 50px !important;
             padding-top: 0 !important;
         }
         #export-card.is-exporting #lifeCapsule * {
             display: flex !important;
             align-items: center !important;
             line-height: 1 !important;
+        }
+        /* 確保「生命靈數：1」與右側「開創者」在視覺上齊平 */
+        #export-card.is-exporting #lifeCapsule .life-number-text {
+            display: flex !important;
+            align-items: center !important;
+            padding-bottom: 8px !important; /* 微調讓靈數與標題視覺對齊 */
         }
         
         /* 針對夥伴卡片的大字體垂直置中微調 */
@@ -181,7 +187,7 @@
             justify-content: flex-start !important;
         }
         
-        /* 大五行字 (左側) 偏移補償 */
+        /* 大五行字 (火、土) 偏移補償，使其在卡片中垂直置中 */
         #export-card.is-exporting #partnerCardWood > span,
         #export-card.is-exporting #partnerCardFire > span {
             display: flex !important;
@@ -189,17 +195,17 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
-            padding-bottom: 60px !important; 
+            padding-bottom: 60px !important; /* 加強垂直居中補償 */
             margin-right: 40px !important;
         }
 
-        /* 標籤文字偏移補償 - 確保「合拍夥伴/磨合夥伴」在膠囊框架內垂直置中 */
+        /* 合拍夥伴/磨合夥伴標籤文字偏移補償 - 確保在膠囊框架內垂直置中 */
         #export-card.is-exporting .partner-badge {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            padding-bottom: 16px !important; /* 修正：增加偏移補償，使文字在膠囊內視覺置中 */
+            padding-bottom: 22px !important; /* 加大補償量，確保文字置中於膠囊內 */
         }
 
         /* 右側文字描述區塊垂直位置 */
@@ -866,7 +872,7 @@
                 </div>
                 <div class="flex flex-col items-center w-full gap-[60px] mt-10">
                     <div id="lifeCapsule" class="flex items-center gap-8 px-[60px] py-[30px] rounded-full border-[3px] border-white/30 bg-white/10">
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-4 life-number-text">
                             <span class="text-[40px] leading-none">生命靈數：</span>
                             <span class="font-bold text-[60px] font-serif leading-none">${data.number}</span>
                         </div>
@@ -945,20 +951,4 @@
         });
     </script>
 </body>
-</html>--- END OF FILE index.html ---
---- START OF FILE types.ts ---
-
-// Integrated into index.html--- END OF FILE types.ts ---
---- START OF FILE index.tsx ---
-
-// All logic moved to index.html as requested by user.
-export {};--- END OF FILE index.tsx ---
---- START OF FILE metadata.json ---
-
-{
-  "name": "玩轉五行v2",
-  "description": "2026 臺灣精油芳療年會官方首頁，結合生命靈數計算與五行線上展覽體驗。",
-  "requestFramePermissions": []
-}--- END OF FILE metadata.json ---
-
-幫我只更動下載圖片的部分，將膠囊中的文字：合拍夥伴、磨合夥伴，可以依據膠囊的框架垂直置中，除了下載圖片的文字位置之外，其他都不可以更動
+</html>
