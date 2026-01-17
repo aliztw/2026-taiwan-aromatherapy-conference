@@ -163,8 +163,8 @@
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            /* 調整底部內距補償，確保左右文字水平對齊且整體垂直置中 */
-            padding-bottom: 45px !important;
+            /* 將生命靈數與主標題高度同步並置中 */
+            padding-bottom: 52px !important;
             padding-top: 0 !important;
         }
         #export-card.is-exporting #lifeCapsule * {
@@ -179,7 +179,6 @@
             display: flex !important;
             align-items: center !important;
             justify-content: flex-start !important;
-            padding-bottom: 0 !important;
         }
         
         /* 大五行字 (左側) 偏移補償 */
@@ -190,17 +189,17 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
-            padding-bottom: 54px !important; /* 視覺位置與右邊區塊對齊 */
+            padding-bottom: 60px !important; 
             margin-right: 40px !important;
         }
 
-        /* 標籤文字偏移補償 */
+        /* 標籤文字偏移補償 - 確保「合拍夥伴/磨合夥伴」在膠囊框架內垂直置中 */
         #export-card.is-exporting .partner-badge {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            padding-bottom: 10px !important; /* 使標籤內文字在視覺上更置中 */
+            padding-bottom: 16px !important; /* 修正：增加偏移補償，使文字在膠囊內視覺置中 */
         }
 
         /* 右側文字描述區塊垂直位置 */
@@ -208,7 +207,7 @@
             display: flex !important;
             flex-direction: column !important;
             justify-content: center !important;
-            padding-bottom: 40px !important; /* 整體往上推一點點與左字火/土對齊 */
+            padding-bottom: 35px !important; 
         }
 
         #export-card.is-exporting #elementConstitutionRow {
@@ -946,4 +945,20 @@
         });
     </script>
 </body>
-</html>
+</html>--- END OF FILE index.html ---
+--- START OF FILE types.ts ---
+
+// Integrated into index.html--- END OF FILE types.ts ---
+--- START OF FILE index.tsx ---
+
+// All logic moved to index.html as requested by user.
+export {};--- END OF FILE index.tsx ---
+--- START OF FILE metadata.json ---
+
+{
+  "name": "玩轉五行v2",
+  "description": "2026 臺灣精油芳療年會官方首頁，結合生命靈數計算與五行線上展覽體驗。",
+  "requestFramePermissions": []
+}--- END OF FILE metadata.json ---
+
+幫我只更動下載圖片的部分，將膠囊中的文字：合拍夥伴、磨合夥伴，可以依據膠囊的框架垂直置中，除了下載圖片的文字位置之外，其他都不可以更動
