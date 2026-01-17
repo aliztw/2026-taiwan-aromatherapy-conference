@@ -163,7 +163,6 @@
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            /* 針對主膠囊進行垂直置中補償 */
             padding-bottom: 58px !important;
             padding-top: 0 !important;
         }
@@ -173,23 +172,23 @@
             line-height: 1 !important;
         }
         
-        /* 讓「生命靈數：1」往下移動 10px */
+        /* 修正「生命靈數：」文字高度，使其與右側標題一致 */
         #export-card.is-exporting #lifeCapsule .life-number-text {
             display: flex !important;
             align-items: center !important;
-            padding-top: 10px !important; 
+            padding-top: 20px !important; /* 增加 padding-top 讓文字向下移動以對齊標題 */
             padding-bottom: 0 !important;
         }
 
-        /* 讓「｜」往下移動 5px 往左移動 5px */
+        /* 修正「｜」分隔線的位置：向下移動並向左移動 */
         #export-card.is-exporting #lifeCapsule h1 {
             border-left-width: 3px !important;
             height: 80px !important;
             display: flex !important;
             align-items: center !important;
             position: relative !important;
-            top: 5px !important;
-            left: -5px !important;
+            top: 10px !important; /* 向下移動 10px */
+            left: -5px !important; /* 向左移動 5px */
             padding-bottom: 6px !important;
         }
         
@@ -203,7 +202,7 @@
             overflow: hidden !important;
         }
         
-        /* 大五行字 (火、土、金等) 的垂直補償 - 向上移動 10px (從 72px 增加到 82px) */
+        /* 大五行字 (火、土、金等) 的垂直補償 - 向上移動 10px */
         #export-card.is-exporting #partnerCardWood > span,
         #export-card.is-exporting #partnerCardFire > span {
             display: flex !important;
@@ -221,7 +220,7 @@
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            padding-bottom: 22px !important; /* 加大補償量，確保文字置中於膠囊內 */
+            padding-bottom: 22px !important; 
         }
 
         /* 右側文字描述區塊垂直位置 */
@@ -591,7 +590,7 @@
         const ELEMENT_MAPPING = {
             1: { element: "木", constitution: "氣鬱x血瘀", title: "開創者", description: "你是超級行動派，敢冒險、不服輸的開創先鋒。", color: "bg-el-wood", hex: "#8b934e", darkHex: "#5d6335", partner: { comp: "火", compDesc: "你的創意會被他的熱情點亮", conflict: "土", conflictDesc: "你的點子太多，他的步伐一時跟不上" } },
             2: { element: "水", constitution: "陽虛x特稟", title: "協調者", description: "你是細膩的傾聽者，擅長在人際中成為潤滑劑。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "你的直覺在他的靈感中再次流動", conflict: "火", conflictDesc: "你的冷靜過深，讓他的熱情被澆熄了" } },
-            3: { element: "火", constitution: "陰虛x濕熱", title: "熱情家", description: "你用熱情點亮世界，擁有點燃氣氛的感染力。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
+            3: { element: "火", constitution: "陰虛x濕熱", title: "表達者", description: "你用熱情點亮世界，擁有點燃氣氛的感染力。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
             4: { element: "土", constitution: "氣虛x痰濕", title: "穩固者", description: "你是注重細節、務實可靠，能把理想落地的人。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "你的務實會被他的調理放大", conflict: "水", conflictDesc: "你的關懷過滿，反而讓他喘不過氣" } },
             5: { element: "火", constitution: "陰虛x濕熱", title: "探索者", description: "你對新鮮事物充滿好奇，勇於打破框架前行。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
             6: { element: "土", constitution: "氣虛x痰濕", title: "照顧者", description: "你樂於照顧他人，是溫暖又包容的療癒存在。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "你的務實會被他的調理放大", conflict: "水", conflictDesc: "你的關懷過滿，反而讓他喘不過氣" } },
@@ -860,8 +859,8 @@
                         </div>
                         <div class="mt-6 laptop:mt-8 mx-6 p-4 laptop:p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10"><p class="text-center leading-relaxed laptop:leading-loose font-light tracking-wide text-xs laptop:text-base opacity-95">${data.description}</p></div>
                         <div class="mt-4 laptop:mt-6 mx-6 w-[calc(100%-3rem)] space-y-3 laptop:space-y-4 pb-6 laptop:pb-8">
-                            <div class="bg-white/20 backdrop-blur-sm rounded-[2rem] laptop:rounded-[2.5rem] p-4 laptop:p-5 flex items-center gap-4 laptop:gap-6 border border-white/5" style="align-items: center;"><span class="text-4xl laptop:text-6xl font-serif font-bold leading-none">${data.partner.comp}</span><div class="flex flex-col gap-1"><span class="bg-white text-stone-800 rounded-full px-2 py-0.5 text-[9px] laptop:text-[10px] font-black w-fit tracking-widest uppercase">合拍夥伴</span><p class="text-[10px] laptop:text-xs font-medium opacity-95">${data.partner.compDesc}</p></div></div>
-                            <div class="bg-white/10 backdrop-blur-sm rounded-[2rem] laptop:rounded-[2.5rem] p-4 laptop:p-5 flex items-center gap-4 laptop:gap-6 border border-white/5" style="align-items: center;"><span class="text-4xl laptop:text-6xl font-serif font-bold leading-none opacity-80">${data.partner.conflict}</span><div class="flex flex-col gap-1"><span class="bg-white/30 text-white rounded-full px-2 py-0.5 text-[9px] laptop:text-[10px] font-black w-fit tracking-widest uppercase">磨合夥伴</span><p class="text-[10px] laptop:text-xs font-medium opacity-80">${data.partner.conflictDesc}</p></div></div>
+                            <div class="bg-white/20 backdrop-blur-sm rounded-[2rem] laptop:rounded-[2.5rem] p-4 laptop:p-5 flex items-center gap-4 laptop:gap-6 border border-white/5" style="align-items: center;"><span class="text-4xl laptop:text-6xl font-serif font-bold leading-none">${data.partner.comp}</span><div class="flex flex-col gap-1"><span class="bg-white text-stone-800 rounded-full px-2 py-0.5 text-[9px] laptop:text-[10px] font-black w-fit tracking-widest uppercase">合拍夥伴</span><span class="text-[10px] laptop:text-xs font-medium opacity-95">${data.partner.compDesc}</span></div></div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-[2rem] laptop:rounded-[2.5rem] p-4 laptop:p-5 flex items-center gap-4 laptop:gap-6 border border-white/5" style="align-items: center;"><span class="text-4xl laptop:text-6xl font-serif font-bold leading-none opacity-80">${data.partner.conflict}</span><div class="flex flex-col gap-1"><span class="bg-white/30 text-white rounded-full px-2 py-0.5 text-[9px] laptop:text-[10px] font-black w-fit tracking-widest uppercase">磨合夥伴</span><span class="text-[10px] laptop:text-xs font-medium opacity-80">${data.partner.conflictDesc}</span></div></div>
                         </div>
                     </div>
                     <div class="flex flex-col items-center mt-6 laptop:mt-8 pb-4">
