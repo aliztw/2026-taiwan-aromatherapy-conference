@@ -163,8 +163,8 @@
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            /* 將整體內容上提以達到膠囊內置中 */
-            padding-bottom: 58px !important;
+            /* 針對主膠囊進行垂直置中補償 */
+            padding-bottom: 50px !important;
             padding-top: 0 !important;
         }
         #export-card.is-exporting #lifeCapsule * {
@@ -172,21 +172,11 @@
             align-items: center !important;
             line-height: 1 !important;
         }
-        /* 確保「生命靈數：1」與右側「開創者」及「|」分隔線視覺齊平 */
+        /* 確保「生命靈數：1」與右側「開創者」在視覺上齊平 */
         #export-card.is-exporting #lifeCapsule .life-number-text {
             display: flex !important;
             align-items: center !important;
-            /* 針對靈數文字部分的細微修正 */
-            padding-bottom: 4px !important; 
-        }
-        /* 分隔線補償 */
-        #export-card.is-exporting #lifeCapsule h1 {
-            border-left-width: 3px !important;
-            height: 80px !important;
-            display: flex !important;
-            align-items: center !important;
-            /* 將分隔線及其後的文字視覺上與靈數文字對齊 */
-            padding-bottom: 6px !important;
+            padding-bottom: 8px !important; /* 微調讓靈數與標題視覺對齊 */
         }
         
         /* 針對夥伴卡片的大字體垂直置中微調 */
@@ -195,11 +185,9 @@
             display: flex !important;
             align-items: center !important;
             justify-content: flex-start !important;
-            height: 280px !important;
-            overflow: hidden !important;
         }
         
-        /* 大五行字 (火、土) 的垂直補償 */
+        /* 大五行字 (火、土) 偏移補償，使其在卡片中垂直置中 */
         #export-card.is-exporting #partnerCardWood > span,
         #export-card.is-exporting #partnerCardFire > span {
             display: flex !important;
@@ -207,19 +195,17 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
-            /* 將大字「火、土」往上移以在卡片中置中 */
-            padding-bottom: 72px !important; 
+            padding-bottom: 60px !important; /* 加強垂直居中補償 */
             margin-right: 40px !important;
         }
 
-        /* 合拍夥伴/磨合夥伴標籤文字補償 */
+        /* 合拍夥伴/磨合夥伴標籤文字偏移補償 - 確保在膠囊框架內垂直置中 */
         #export-card.is-exporting .partner-badge {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            /* 讓標籤文字在膠囊內視覺置中 */
-            padding-bottom: 12px !important;
+            padding-bottom: 22px !important; /* 加大補償量，確保文字置中於膠囊內 */
         }
 
         /* 右側文字描述區塊垂直位置 */
@@ -227,8 +213,7 @@
             display: flex !important;
             flex-direction: column !important;
             justify-content: center !important;
-            /* 將右側整個描述塊上移，以對齊左側大字 */
-            padding-bottom: 45px !important; 
+            padding-bottom: 35px !important; 
         }
 
         #export-card.is-exporting #elementConstitutionRow {
@@ -590,7 +575,7 @@
         const ELEMENT_MAPPING = {
             1: { element: "木", constitution: "氣鬱x血瘀", title: "開創者", description: "你是超級行動派，敢冒險、不服輸的開創先鋒。", color: "bg-el-wood", hex: "#8b934e", darkHex: "#5d6335", partner: { comp: "火", compDesc: "你的創意會被他的熱情點亮", conflict: "土", conflictDesc: "你的點子太多，他的步伐一時跟不上" } },
             2: { element: "水", constitution: "陽虛x特稟", title: "協調者", description: "你是細膩的傾聽者，擅長在人際中成為潤滑劑。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "你的直覺在他的靈感中再次流動", conflict: "火", conflictDesc: "你的冷靜過深，讓他的熱情被澆熄了" } },
-            3: { element: "火", constitution: "陰虛x濕熱", title: "表達者", description: "你用熱情點亮世界，擁有點燃氣氛的感染力。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
+            3: { element: "火", constitution: "陰虛x濕熱", title: "熱情家", description: "你用熱情點亮世界，擁有點燃氣氛的感染力。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
             4: { element: "土", constitution: "氣虛x痰濕", title: "穩固者", description: "你是注重細節、務實可靠，能把理想落地的人。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "你的務實會被他的調理放大", conflict: "水", conflictDesc: "你的關懷過滿，反而讓他喘不過氣" } },
             5: { element: "火", constitution: "陰虛x濕熱", title: "探索者", description: "你對新鮮事物充滿好奇，勇於打破框架前行。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
             6: { element: "土", constitution: "氣虛x痰濕", title: "照顧者", description: "你樂於照顧他人，是溫暖又包容的療癒存在。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "你的務實會被他的調理放大", conflict: "水", conflictDesc: "你的關懷過滿，反而讓他喘不過氣" } },
