@@ -156,23 +156,20 @@
             overflow: hidden !important;
         }
         
-        /* 輸出跑版修正 (針對 GitHub 環境加強垂直置中) */
+        /* 輸出跑版修正 (Targeting specified IDs) */
         #export-card.is-exporting #lifeCapsule {
-            height: 160px !important;
+            height: 160px; 
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            /* 進一步將文字位置往上調整：增加底部內距補償至 24px */
-            padding-top: 0 !important;
-            padding-bottom: 24px !important; 
+            /* 將文字往上調整：增加底部內距補償字體基準線偏差 */
+            padding-bottom: 40px !important;
         }
         #export-card.is-exporting #lifeCapsule * {
             display: flex !important;
             align-items: center !important;
             line-height: 1 !important;
-            margin: 0 !important;
-            height: auto !important;
         }
         #export-card.is-exporting #elementConstitutionRow {
             display: flex !important;
@@ -199,6 +196,8 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
+            /* 針對大數字加強垂直偏移調整 */
+            padding-bottom: 60px !important;
         }
         #export-card.is-exporting * {
             transition: none !important;
