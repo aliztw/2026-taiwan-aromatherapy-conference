@@ -156,15 +156,16 @@
             overflow: hidden !important;
         }
         
-        /* 輸出跑版修正 (Targeting specified IDs) */
+        /* 輸出跑版修正 (針對 GitHub 產圖微調垂直置中) */
         #export-card.is-exporting #lifeCapsule {
-            height: 160px; 
+            height: 160px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            /* 將文字往上調整：增加底部內距補償字體基準線偏差 */
-            padding-bottom: 40px !important;
+            /* 進一步大幅增加底部 padding 以抵銷 html2canvas 字體基準線下移的問題 */
+            padding-bottom: 60px !important;
+            padding-top: 0 !important;
         }
         #export-card.is-exporting #lifeCapsule * {
             display: flex !important;
@@ -189,6 +190,13 @@
             line-height: 1.6 !important;
             text-align: center !important;
         }
+        #export-card.is-exporting #partnerCardWood,
+        #export-card.is-exporting #partnerCardFire {
+            display: flex !important;
+            align-items: center !important;
+            /* 針對夥伴卡片整體內容也做垂直微調 */
+            padding-bottom: 40px !important;
+        }
         #export-card.is-exporting #partnerCardWood > span,
         #export-card.is-exporting #partnerCardFire > span {
             display: flex !important;
@@ -196,7 +204,7 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
-            /* 針對大數字加強垂直偏移調整 */
+            /* 針對大字體的補足：再增加偏移量 */
             padding-bottom: 60px !important;
         }
         #export-card.is-exporting * {
@@ -539,7 +547,7 @@
 
         const ELEMENT_MAPPING = {
             1: { element: "木", constitution: "氣鬱x血瘀", title: "開創者", description: "你是超級行動派，敢冒險、不服輸的開創先鋒。", color: "bg-el-wood", hex: "#8b934e", darkHex: "#5d6335", partner: { comp: "火", compDesc: "你的創意會被他的熱情點亮", conflict: "土", conflictDesc: "你的點子太多，他的步伐一時跟不上" } },
-            2: { element: "水", constitution: "陽虛x特稟", title: "協調者", description: "你是細膩的傾聽者，擅長在人際中成為潤滑劑。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "你的直覺在他的靈感中再次流動", conflict: "火", conflictDesc: "你的冷靜過深，讓他的熱情被澆熄了" } },
+            2: { element: "水", constitution: "陽虛x特稟", title: "協調者", description: "你是細膩的傾聽者，擅長在人際中成為潤滑劑。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "你的直覺在他的靈感中再次流動", conflict: "火", conflictDesc: "你的冷靜過發，讓他的熱情被澆熄了" } },
             3: { element: "火", constitution: "陰虛x濕熱", title: "熱情家", description: "你用熱情點亮世界，擁有點燃氣氛的感染力。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
             4: { element: "土", constitution: "氣虛x痰濕", title: "穩固者", description: "你是注重細節、務實可靠，能把理想落地的人。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "你的務實會被他的調理放大", conflict: "水", conflictDesc: "你的關懷過滿，反而讓他喘不過氣" } },
             5: { element: "火", constitution: "陰虛x濕熱", title: "探索者", description: "你對新鮮事物充滿好奇，勇於打破框架前行。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
