@@ -176,21 +176,30 @@
         #export-card.is-exporting #lifeCapsule .life-number-text {
             display: flex !important;
             align-items: center !important;
-            padding-top: 25px !important; /* 增加偏移確保對齊標題 */
+            padding-top: 25px !important; 
             padding-bottom: 0 !important;
         }
 
-        /* 修正「｜」分隔線的位置：確保與提供的圖片一致 */
-        #export-card.is-exporting #lifeCapsule h1 {
-            border-left-width: 3px !important;
+        /* 修正「｜」分隔線的位置：改為獨立元素以精確匹配圖片位置 */
+        #export-card.is-exporting #lifeCapsuleDivider {
+            border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
             height: 80px !important;
+            position: relative !important;
+            top: 25px !important; /* 精確對齊數字與標題中央高度 */
+            left: -15px !important; /* 向左偏移以更接近數字 */
+            margin-right: 15px !important;
+            display: block !important;
+        }
+
+        /* 移除標題原有的邊框，標題位置由主結構控制 */
+        #export-card.is-exporting #lifeCapsule h1 {
+            border-left: none !important;
             display: flex !important;
             align-items: center !important;
+            padding-left: 0 !important;
+            margin-left: 0 !important;
             position: relative !important;
-            top: 18px !important; /* 精確垂直下移，對齊文字中央 */
-            left: -10px !important; /* 向左微調位置 */
-            margin-left: 20px !important;
-            padding-bottom: 0 !important;
+            top: 0px !important;
         }
         
         /* 針對夥伴卡片的大字體垂直置中微調 */
@@ -203,7 +212,7 @@
             overflow: hidden !important;
         }
         
-        /* 大五行字 (火、土、金等) 的垂直補償 - 向上移動 */
+        /* 大五行字 (火、土、金等) 的垂直補償 */
         #export-card.is-exporting #partnerCardWood > span,
         #export-card.is-exporting #partnerCardFire > span {
             display: flex !important;
@@ -892,7 +901,8 @@
                             <span class="text-[40px] leading-none">生命靈數：</span>
                             <span class="font-bold text-[60px] font-serif leading-none">${data.number}</span>
                         </div>
-                        <h1 class="text-[80px] font-serif font-bold tracking-widest leading-none pl-8 border-l border-white/30 ml-8 flex items-center">${data.title}</h1>
+                        <div id="lifeCapsuleDivider"></div>
+                        <h1 class="text-[80px] font-serif font-bold tracking-widest leading-none flex items-center">${data.title}</h1>
                     </div>
                     <div id="elementConstitutionRow" class="flex items-start justify-center w-full px-[20px]">
                         <div class="flex flex-col items-center w-1/2 px-[20px]">
@@ -967,4 +977,4 @@
         });
     </script>
 </body>
-</html>--- END OF FILE index.html ---提供正確版本的圖片下載位置，請參考圖片的位置，幫我只更動下載圖片的部分，讓「｜」符號，和提供的圖片位置一樣
+</html>
