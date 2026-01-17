@@ -164,7 +164,7 @@
             justify-content: center !important;
             line-height: 1 !important;
             /* 針對主膠囊進行垂直置中補償 */
-            padding-bottom: 50px !important;
+            padding-bottom: 58px !important;
             padding-top: 0 !important;
         }
         #export-card.is-exporting #lifeCapsule * {
@@ -172,11 +172,25 @@
             align-items: center !important;
             line-height: 1 !important;
         }
-        /* 確保「生命靈數：1」與右側「開創者」在視覺上齊平 */
+        
+        /* 讓「生命靈數：1」往下移動 10px */
         #export-card.is-exporting #lifeCapsule .life-number-text {
             display: flex !important;
             align-items: center !important;
-            padding-bottom: 8px !important; /* 微調讓靈數與標題視覺對齊 */
+            padding-top: 10px !important; 
+            padding-bottom: 0 !important;
+        }
+
+        /* 讓「｜」往下移動 5px 往左移動 5px */
+        #export-card.is-exporting #lifeCapsule h1 {
+            border-left-width: 3px !important;
+            height: 80px !important;
+            display: flex !important;
+            align-items: center !important;
+            position: relative !important;
+            top: 5px !important;
+            left: -5px !important;
+            padding-bottom: 6px !important;
         }
         
         /* 針對夥伴卡片的大字體垂直置中微調 */
@@ -185,9 +199,11 @@
             display: flex !important;
             align-items: center !important;
             justify-content: flex-start !important;
+            height: 280px !important;
+            overflow: hidden !important;
         }
         
-        /* 大五行字 (火、土) 偏移補償，使其在卡片中垂直置中 */
+        /* 大五行字 (火、土、金等) 的垂直補償 - 向上移動 10px (從 72px 增加到 82px) */
         #export-card.is-exporting #partnerCardWood > span,
         #export-card.is-exporting #partnerCardFire > span {
             display: flex !important;
@@ -195,7 +211,7 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
-            padding-bottom: 60px !important; /* 加強垂直居中補償 */
+            padding-bottom: 82px !important; 
             margin-right: 40px !important;
         }
 
@@ -213,7 +229,7 @@
             display: flex !important;
             flex-direction: column !important;
             justify-content: center !important;
-            padding-bottom: 35px !important; 
+            padding-bottom: 45px !important; 
         }
 
         #export-card.is-exporting #elementConstitutionRow {
