@@ -139,6 +139,19 @@
             font-variant-numeric: tabular-nums;
         }
 
+        /* 離屏固定寬度產圖容器 */
+        #captureExport {
+            position: fixed;
+            left: -99999px;
+            top: 0;
+            width: 1080px !important;
+            height: 1920px !important;
+            pointer-events: none;
+            opacity: 1;
+            z-index: -1;
+            contain: layout paint style;
+        }
+
         /* 匯出專用樣式 - 強制固定輸出規格 */
         #export-card.export-mode {
             width: 1080px !important;
@@ -167,6 +180,19 @@
             gap: 32px !important;
             padding: 30px 60px !important;
             border-radius: 9999px !important;
+        }
+        #export-card.is-exporting #lifeCapsule > * {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+        }
+        #export-card.is-exporting #lifeCapsule h1 {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+            border-left-width: 3px !important;
         }
         #export-card.is-exporting #elementConstitutionRow {
             display: flex !important;
@@ -485,7 +511,9 @@
     
     <!-- 匯出專用隱藏容器 -->
     <div id="export-root" style="position: fixed; left: -9999px; top: 0; pointer-events: none;">
-        <div id="export-card"></div>
+        <div id="captureExport">
+            <div id="export-card"></div>
+        </div>
     </div>
 
     <!-- JavaScript Logic -->
@@ -668,19 +696,16 @@
             lucide.createIcons();
             btn.disabled = true;
 
-            const ua = navigator.userAgent;
-            const isAndroid = /Android/i.test(ua);
-            const isSamsung = /SamsungBrowser/i.test(ua);
-
             try {
                 // Ensure hidden card is updated with current data
                 renderExportCard(currentResultData);
                 const exportCard = document.getElementById('export-card');
+                const captureRoot = document.getElementById('captureExport');
                 
                 // DATA URI FALLBACK: Replace logo with data URL for CORS compatibility
                 const logoImg = exportCard.querySelector('#alizWhiteLogo');
                 const originalSrc = logoImg.src;
-                const dataUrl = await toDataURL(originalSrc);
+                const dataUrl = await toDataURL(LOGO_CARD_URL);
                 logoImg.src = dataUrl;
 
                 // Force layout state
@@ -691,10 +716,11 @@
                 await waitForImageLoad('#alizWhiteLogo');
                 exportCard.getBoundingClientRect(); // Trigger reflow
 
+                // Allow UI to catch up
                 await new Promise(resolve => setTimeout(resolve, 800));
                 
-                // Capture the off-screen card specifically
-                const canvas = await html2canvas(exportCard, {
+                // Capture from #captureExport (the off-screen container)
+                const canvas = await html2canvas(captureRoot, {
                     scale: 2, 
                     useCORS: true, 
                     allowTaint: false,
@@ -707,58 +733,67 @@
                     windowHeight: 1920
                 });
 
-                // RESTORE
+                // RESTORE SRC
                 logoImg.src = originalSrc;
                 exportCard.classList.remove('is-exporting');
 
-                canvas.toBlob(async (blob) => {
-                    if (!blob) throw new Error("Blob generation failed");
-                    const fileName = "aliz-result.png";
-                    const isMobile = /iPhone|iPod|Android.*Mobile/i.test(ua);
+                // Convert to Blob using Promise for sequential flow (critical for iOS User Gesture)
+                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                if (!blob) throw new Error("Blob generation failed");
 
-                    const handleBlobDownload = (targetBlob) => {
-                        const blobUrl = URL.createObjectURL(targetBlob);
-                        if (isAndroid || isSamsung) {
-                            const link = document.createElement('a');
-                            link.href = blobUrl;
-                            link.download = fileName;
-                            link.rel = "noopener";
-                            link.target = "_self";
-                            document.body.appendChild(link);
-                            try { link.click(); } catch (e) { console.error(e); }
-                            document.body.removeChild(link);
-                            setTimeout(() => {
-                                if (document.visibilityState === 'visible') { window.open(blobUrl, '_blank'); }
-                            }, 1500);
-                        } else {
-                            const link = document.createElement('a');
-                            link.download = fileName;
-                            link.href = blobUrl;
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                        }
-                        setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
-                    };
+                const fileName = "aliz-result.png";
+                const ua = navigator.userAgent;
+                const isIOS = /iPhone|iPad|iPod/.test(ua);
+                const isAndroid = /Android/i.test(ua);
+                const isSamsung = /SamsungBrowser/i.test(ua);
 
-                    const file = new File([blob], fileName, { type: "image/png" });
-                    if (isMobile && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                        try {
-                            await navigator.share({ files: [file], title: '2026 臺灣精油芳療年會', text: '這是我的五行屬性分析' });
-                        } catch (err) {
-                            handleBlobDownload(blob);
+                if (isIOS && navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], fileName, {type: "image/png"})] })) {
+                    // iPhone Native Share Sheet
+                    try {
+                        const file = new File([blob], fileName, { type: "image/png" });
+                        await navigator.share({ 
+                            files: [file], 
+                            title: '2026 臺灣精油芳療年會', 
+                            text: ' ' 
+                        });
+                    } catch (err) {
+                        if (err.name !== 'AbortError') {
+                            const blobUrl = URL.createObjectURL(blob);
+                            window.open(blobUrl, '_blank');
                         }
-                    } else {
-                        handleBlobDownload(blob);
                     }
-                    
-                    btn.innerHTML = originalContent;
-                    btn.disabled = false;
-                    lucide.createIcons();
-                }, 'image/png');
+                } else if (isAndroid || isSamsung) {
+                    // Samsung / Android Blob Download Branch
+                    const blobUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = fileName;
+                    link.rel = "noopener";
+                    link.target = "_self";
+                    document.body.appendChild(link);
+                    try { 
+                        link.click(); 
+                    } catch (e) { 
+                        window.open(blobUrl, '_blank'); 
+                    }
+                    document.body.removeChild(link);
+                    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+                } else {
+                    // Desktop or other fallback
+                    const blobUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+                }
+
             } catch (err) {
                 console.error(err);
                 alert('圖片生成失敗，請稍後再試。');
+            } finally {
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
                 lucide.createIcons();
