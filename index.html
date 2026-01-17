@@ -156,15 +156,15 @@
             overflow: hidden !important;
         }
         
-        /* 輸出跑版修正 (針對 GitHub 產圖微調垂直置中) */
+        /* 輸出跑版修正 (微調垂直置中) */
         #export-card.is-exporting #lifeCapsule {
             height: 160px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            /* 進一步大幅增加底部 padding 以抵銷 html2canvas 字體基準線下移的問題 */
-            padding-bottom: 60px !important;
+            /* 調整底部內距補償，確保左右文字水平對齊且整體垂直置中 */
+            padding-bottom: 45px !important;
             padding-top: 0 !important;
         }
         #export-card.is-exporting #lifeCapsule * {
@@ -172,6 +172,45 @@
             align-items: center !important;
             line-height: 1 !important;
         }
+        
+        /* 針對夥伴卡片的大字體垂直置中微調 */
+        #export-card.is-exporting #partnerCardWood,
+        #export-card.is-exporting #partnerCardFire {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            padding-bottom: 0 !important;
+        }
+        
+        /* 大五行字 (左側) 偏移補償 */
+        #export-card.is-exporting #partnerCardWood > span,
+        #export-card.is-exporting #partnerCardFire > span {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+            height: 100% !important;
+            padding-bottom: 54px !important; /* 視覺位置與右邊區塊對齊 */
+            margin-right: 40px !important;
+        }
+
+        /* 標籤文字偏移補償 */
+        #export-card.is-exporting .partner-badge {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+            padding-bottom: 10px !important; /* 使標籤內文字在視覺上更置中 */
+        }
+
+        /* 右側文字描述區塊垂直位置 */
+        #export-card.is-exporting .partner-desc-block {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            padding-bottom: 40px !important; /* 整體往上推一點點與左字火/土對齊 */
+        }
+
         #export-card.is-exporting #elementConstitutionRow {
             display: flex !important;
             align-items: center !important;
@@ -189,23 +228,6 @@
             justify-content: center !important;
             line-height: 1.6 !important;
             text-align: center !important;
-        }
-        #export-card.is-exporting #partnerCardWood,
-        #export-card.is-exporting #partnerCardFire {
-            display: flex !important;
-            align-items: center !important;
-            /* 針對夥伴卡片整體內容也做垂直微調 */
-            padding-bottom: 40px !important;
-        }
-        #export-card.is-exporting #partnerCardWood > span,
-        #export-card.is-exporting #partnerCardFire > span {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            line-height: 1 !important;
-            height: 100% !important;
-            /* 針對大字體的補足：再增加偏移量 */
-            padding-bottom: 60px !important;
         }
         #export-card.is-exporting * {
             transition: none !important;
@@ -547,7 +569,7 @@
 
         const ELEMENT_MAPPING = {
             1: { element: "木", constitution: "氣鬱x血瘀", title: "開創者", description: "你是超級行動派，敢冒險、不服輸的開創先鋒。", color: "bg-el-wood", hex: "#8b934e", darkHex: "#5d6335", partner: { comp: "火", compDesc: "你的創意會被他的熱情點亮", conflict: "土", conflictDesc: "你的點子太多，他的步伐一時跟不上" } },
-            2: { element: "水", constitution: "陽虛x特稟", title: "協調者", description: "你是細膩的傾聽者，擅長在人際中成為潤滑劑。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "你的直覺在他的靈感中再次流動", conflict: "火", conflictDesc: "你的冷靜過發，讓他的熱情被澆熄了" } },
+            2: { element: "水", constitution: "陽虛x特稟", title: "協調者", description: "你是細膩的傾聽者，擅長在人際中成為潤滑劑。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "你的直覺在他的靈感中再次流動", conflict: "火", conflictDesc: "你的冷靜過深，讓他的熱情被澆熄了" } },
             3: { element: "火", constitution: "陰虛x濕熱", title: "熱情家", description: "你用熱情點亮世界，擁有點燃氣氛的感染力。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
             4: { element: "土", constitution: "氣虛x痰濕", title: "穩固者", description: "你是注重細節、務實可靠，能把理想落地的人。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "你的務實會被他的調理放大", conflict: "水", conflictDesc: "你的關懷過滿，反而讓他喘不過氣" } },
             5: { element: "火", constitution: "陰虛x濕熱", title: "探索者", description: "你對新鮮事物充滿好奇，勇於打破框架前行。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
@@ -866,18 +888,18 @@
                     <p class="text-center leading-loose font-light text-[36px] opacity-95">${data.description}</p>
                 </div>
                 <div id="firstBlockAfterRow" class="w-full space-y-8 mb-10 text-left">
-                    <div id="partnerCardWood" class="bg-white/20 rounded-[60px] p-[60px] flex items-center gap-[60px] border-[3px] border-white/20 h-[280px]">
+                    <div id="partnerCardWood" class="bg-white/20 rounded-[60px] p-[60px] flex items-center gap-[40px] border-[3px] border-white/20 h-[280px]">
                         <span class="text-[160px] font-serif font-bold flex items-center justify-center leading-none">${data.partner.comp}</span>
-                        <div class="flex flex-col gap-4">
-                            <span class="bg-white text-stone-800 text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest leading-none">合拍夥伴</span>
-                            <p class="text-[36px] font-medium tracking-wide leading-none">${data.partner.compDesc}</p>
+                        <div class="partner-desc-block">
+                            <span class="partner-badge bg-white text-stone-800 text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest leading-none mb-4">合拍夥伴</span>
+                            <p class="text-[36px] font-medium tracking-wide leading-tight">${data.partner.compDesc}</p>
                         </div>
                     </div>
-                    <div id="partnerCardFire" class="bg-white/10 rounded-[60px] p-[60px] flex items-center gap-[60px] border-[3px] border-white/10 h-[280px]">
+                    <div id="partnerCardFire" class="bg-white/10 rounded-[60px] p-[60px] flex items-center gap-[40px] border-[3px] border-white/10 h-[280px]">
                         <span class="text-[160px] font-serif font-bold opacity-80 flex items-center justify-center leading-none">${data.partner.conflict}</span>
-                        <div class="flex flex-col gap-4">
-                            <span class="bg-white/20 text-white text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest leading-none">磨合夥伴</span>
-                            <p class="text-[36px] font-medium tracking-wide opacity-80 leading-none">${data.partner.conflictDesc}</p>
+                        <div class="partner-desc-block">
+                            <span class="partner-badge bg-white/20 text-white text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest leading-none mb-4">磨合夥伴</span>
+                            <p class="text-[36px] font-medium tracking-wide opacity-80 leading-tight">${data.partner.conflictDesc}</p>
                         </div>
                     </div>
                 </div>
