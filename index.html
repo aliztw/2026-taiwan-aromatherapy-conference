@@ -181,7 +181,7 @@
             overflow: hidden !important;
         }
         
-        /* 輸出跑版修正 (Targeting specified IDs to force Desktop-standard layouts) */
+        /* 輸出垂直置中修正 (強化選擇器與強制性) */
         #export-card.is-exporting #lifeCapsule {
             height: 160px !important; /* 鎖定高度避免字體撐高 */
             display: flex !important;
@@ -189,16 +189,14 @@
             justify-content: center !important;
             line-height: 1 !important;
             gap: 32px !important;
-            padding: 30px 60px !important;
+            padding: 0 60px !important; /* 配合固定高度移除上下 padding */
             border-radius: 9999px !important;
         }
         
-        /* 膠囊垂直置中修正 (強化強制性) */
         #export-card.is-exporting #lifeCapsule > div {
             height: 100% !important;
             display: flex !important;
             align-items: center !important;
-            line-height: 1 !important;
         }
         #export-card.is-exporting #lifeCapsule h1 {
             height: 100% !important;
@@ -206,6 +204,7 @@
             align-items: center !important;
             line-height: 1 !important;
             border-left-width: 3px !important;
+            padding-left: 32px !important;
         }
         #export-card.is-exporting #lifeCapsule span {
             line-height: 1 !important;
@@ -258,7 +257,7 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
-            align-self: stretch !important; /* 強制吃滿高度再置中 */
+            align-self: stretch !important; /* 鎖死吃滿高度 */
             width: 160px !important;
             font-size: 160px !important;
         }
@@ -320,7 +319,7 @@
     <section id="hero" class="relative w-full min-h-screen md:min-h-0 md:h-auto laptop:h-[85vh] 2xl:h-screen flex flex-col justify-start md:justify-start lg:justify-center overflow-hidden bg-stone-900 pt-24 md:pt-32 lg:pt-0 pb-12 md:pb-32 lg:pb-0">
         <!-- Background -->
         <div class="absolute inset-0 z-0">
-            <img src="https://img.shoplineapp.com/media/image_clips/693fc987366d70e3a42a157a/original.jpg?1765788039=&owner_id=5caf39294d91a10001727c79" alt="Background" class="w-full h-full object-cover opacity-60">
+            <img src="https://aliztw.github.io/2026-taiwan-aromatherapy-conference/banner.jpg" alt="Background" class="w-full h-full object-cover opacity-60">
             <div class="absolute inset-0 bg-gradient-to-br from-stone-900 via-amber-900/40 to-emerald-900/60 mix-blend-overlay"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-stone-900/20 to-stone-900"></div>
             
@@ -547,7 +546,7 @@
                 tag: "前導區域",
                 color: "text-white",
                 bgGradient: "from-stone-900 via-stone-800 to-stone-950",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/693fc987366d70e3a42a157a/original.jpg?1765788039=&owner_id=5caf39294d91a10001727c79",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/star.jpg",
                 link: "https://aliztw.github.io/indro/",
                 type: "prologue"
             },
@@ -558,7 +557,7 @@
                 tag: "木之展區",
                 color: "text-white",
                 bgGradient: "from-el-wood to-emerald-800",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3813f52684d32c66f3b/original.jpg?1765385089=&owner_id=5caf39294d91a10001727c79",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/wood.jpg",
                 link: "https://aliztw.github.io/wood/",
                 type: "experience"
             },
@@ -569,7 +568,7 @@
                 tag: "火之展區",
                 color: "text-white",
                 bgGradient: "from-el-fire to-red-900",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3872d2bf66a426ce590/original.jpg?1765385094=&owner_id=5caf39294d91a10001727c79",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/fire.jpg",
                 link: "https://aliztw.github.io/fire/",
                 type: "experience"
             },
@@ -580,7 +579,7 @@
                 tag: "土之展區",
                 color: "text-white",
                 bgGradient: "from-el-earth to-amber-900",
-                imageUrl: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=800&q=80",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/earth.jpg",
                 link: "https://aliztw.github.io/earth/",
                 type: "experience"
             },
@@ -591,7 +590,7 @@
                 tag: "金之展區",
                 color: "text-white",
                 bgGradient: "from-el-metal to-amber-800",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3961e5e75d00618cd98/original.jpg?1765385110=&owner_id=5caf39294d91a10001727c79",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/metal.jpg",
                 link: "https://aliztw.github.io/gold/",
                 type: "experience"
             },
@@ -602,7 +601,7 @@
                 tag: "水之展區",
                 color: "text-white",
                 bgGradient: "from-el-water to-blue-900",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a39d6dc52d7639694521/original.jpg?1765385116=&owner_id=5caf39294d91a10001727c79",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/water.jpg",
                 link: "https://aliztw.github.io/water/",
                 type: "experience"
             }
@@ -716,11 +715,12 @@
             lucide.createIcons();
             btn.disabled = true;
 
+            const exportCard = document.getElementById('export-card');
+            const captureRoot = document.getElementById('captureExport');
+
             try {
                 // Populate hidden card
                 renderExportCard(currentResultData);
-                const exportCard = document.getElementById('export-card');
-                const captureRoot = document.getElementById('captureExport');
                 
                 // DATA URI fallback for CORS compatibility
                 const logoImg = exportCard.querySelector('#alizWhiteLogo');
@@ -733,7 +733,7 @@
                 
                 // Wait for assets and reflow
                 if (document.fonts) await document.fonts.ready;
-                await waitForImageLoad('#alizWhiteLogo');
+                await waitForImageLoad('#export-card #alizWhiteLogo');
                 captureRoot.getBoundingClientRect(); // Trigger reflow
 
                 await new Promise(resolve => setTimeout(resolve, 800));
@@ -754,7 +754,7 @@
 
                 // Restore card status
                 logoImg.src = originalSrc;
-                exportCard.classList.remove('is-exporting');
+                exportCard.classList.remove('export-mode', 'is-exporting');
 
                 // Convert to Blob using Promise to keep navigator.share in the click task chain (Critical for iOS)
                 const blob = await new Promise((resolve, reject) => {
@@ -814,8 +814,7 @@
             } catch (err) {
                 console.error(err);
                 alert('圖片生成失敗，請稍後再試。');
-                const ec = document.getElementById('export-card');
-                if (ec) ec.classList.remove('is-exporting');
+                if (exportCard) exportCard.classList.remove('export-mode', 'is-exporting');
             } finally {
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
