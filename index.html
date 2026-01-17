@@ -172,24 +172,25 @@
             line-height: 1 !important;
         }
         
-        /* 修正「生命靈數：」文字高度，使其與右側標題一致 */
+        /* 修正「生命靈數：」文字高度 */
         #export-card.is-exporting #lifeCapsule .life-number-text {
             display: flex !important;
             align-items: center !important;
-            padding-top: 20px !important; /* 增加 padding-top 讓文字向下移動以對齊標題 */
+            padding-top: 25px !important; /* 增加偏移確保對齊標題 */
             padding-bottom: 0 !important;
         }
 
-        /* 修正「｜」分隔線的位置：向下移動並向左移動 */
+        /* 修正「｜」分隔線的位置：確保與提供的圖片一致 */
         #export-card.is-exporting #lifeCapsule h1 {
             border-left-width: 3px !important;
             height: 80px !important;
             display: flex !important;
             align-items: center !important;
             position: relative !important;
-            top: 10px !important; /* 向下移動 10px */
-            left: -5px !important; /* 向左移動 5px */
-            padding-bottom: 6px !important;
+            top: 18px !important; /* 精確垂直下移，對齊文字中央 */
+            left: -10px !important; /* 向左微調位置 */
+            margin-left: 20px !important;
+            padding-bottom: 0 !important;
         }
         
         /* 針對夥伴卡片的大字體垂直置中微調 */
@@ -202,7 +203,7 @@
             overflow: hidden !important;
         }
         
-        /* 大五行字 (火、土、金等) 的垂直補償 - 向上移動 10px */
+        /* 大五行字 (火、土、金等) 的垂直補償 - 向上移動 */
         #export-card.is-exporting #partnerCardWood > span,
         #export-card.is-exporting #partnerCardFire > span {
             display: flex !important;
@@ -214,7 +215,7 @@
             margin-right: 40px !important;
         }
 
-        /* 合拍夥伴/磨合夥伴標籤文字偏移補償 - 確保在膠囊框架內垂直置中 */
+        /* 合拍夥伴/磨合夥伴標籤文字偏移補償 */
         #export-card.is-exporting .partner-badge {
             display: flex !important;
             align-items: center !important;
@@ -966,4 +967,4 @@
         });
     </script>
 </body>
-</html>
+</html>--- END OF FILE index.html ---提供正確版本的圖片下載位置，請參考圖片的位置，幫我只更動下載圖片的部分，讓「｜」符號，和提供的圖片位置一樣
