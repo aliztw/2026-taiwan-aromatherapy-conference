@@ -158,9 +158,11 @@
         
         /* 輸出跑版修正 (Targeting specified IDs) */
         #export-card.is-exporting #lifeCapsule {
+            height: 160px; 
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
+            align-items: center;
             line-height: 1 !important;
         }
         #export-card.is-exporting #elementConstitutionRow {
@@ -794,8 +796,8 @@
                             <img id="alizWhiteLogo" src="${LOGO_CARD_URL}" alt="ALIZ Logo" class="h-6 laptop:h-10 object-contain brightness-0 invert mb-2" crossorigin="anonymous" referrerpolicy="no-referrer" decoding="async" loading="eager">
                             <h2 class="text-[10px] laptop:text-sm font-light tracking-[0.2em] opacity-90 uppercase">2026 臺灣精油芳療年會</h2>
                         </div>
-                        <div class="mt-6 laptop:mt-8 flex flex-wrap items-center justify-center gap-3 laptop:gap-4 px-4">
-                            <div class="inline-flex items-center justify-center px-4 py-1 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm"  style="align-items: center;">
+                        <div class="mt-6 laptop:mt-8 flex flex-wrap items-center justify-center gap-3 laptop:gap-4 px-4" style="align-items: center;">
+                            <div class="inline-flex items-center justify-center px-4 py-1 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm">
                                 <span class="text-xs laptop:text-base font-medium tracking-wider">生命靈數：<span class="font-bold text-base laptop:text-xl font-serif">${number}</span></span>
                             </div>
                             <h1 class="text-2xl laptop:text-4xl font-serif font-bold tracking-widest drop-shadow-md whitespace-nowrap">${data.title}</h1>
