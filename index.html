@@ -181,15 +181,15 @@
             overflow: hidden !important;
         }
         
-        /* 輸出垂直置中修正 (強化選擇器與強制性) */
+        /* 輸出垂直置中修正：鎖死行高與容器對齊 */
         #export-card.is-exporting #lifeCapsule {
-            height: 160px !important; /* 鎖定高度避免字體撐高 */
+            height: 160px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            gap: 32px !important;
-            padding: 0 60px !important; /* 配合固定高度移除上下 padding */
+            gap: 0 !important; /* 改用內層 padding 處理間距 */
+            padding: 0 60px !important;
             border-radius: 9999px !important;
         }
         
@@ -197,19 +197,23 @@
             height: 100% !important;
             display: flex !important;
             align-items: center !important;
+            line-height: 1 !important;
+            padding-right: 32px !important;
         }
         #export-card.is-exporting #lifeCapsule h1 {
             height: 100% !important;
             display: flex !important;
             align-items: center !important;
             line-height: 1 !important;
-            border-left-width: 3px !important;
+            margin: 0 !important;
+            border-left: 3px solid rgba(255,255,255,0.3) !important;
             padding-left: 32px !important;
         }
         #export-card.is-exporting #lifeCapsule span {
             line-height: 1 !important;
             display: inline-flex !important;
             align-items: center !important;
+            margin: 0 !important;
         }
 
         #export-card.is-exporting #elementConstitutionRow {
@@ -257,7 +261,7 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
-            align-self: stretch !important; /* 鎖死吃滿高度 */
+            align-self: stretch !important;
             width: 160px !important;
             font-size: 160px !important;
         }
@@ -279,7 +283,7 @@
 <body class="bg-stone-50 text-stone-800 selection:bg-amber-200 selection:text-amber-900 text-left">
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent py-6">
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent py-4">
         <div id="nav-container" class="app-container flex justify-between items-center text-white transition-colors duration-300">
             <!-- Logo -->
             <a href="https://aliztw.github.io/2026-taiwan-aromatherapy-conference/">
@@ -731,10 +735,12 @@
                 // Force layout state (啟用垂直置中鎖定樣式)
                 exportCard.classList.add('export-mode', 'is-exporting');
                 
-                // Wait for assets and reflow
+                // Wait for assets and force reflow
                 if (document.fonts) await document.fonts.ready;
                 await waitForImageLoad('#export-card #alizWhiteLogo');
-                captureRoot.getBoundingClientRect(); // Trigger reflow
+                
+                // 關鍵：強制重新計算佈局
+                captureRoot.getBoundingClientRect(); 
 
                 await new Promise(resolve => setTimeout(resolve, 800));
                 
@@ -925,12 +931,12 @@
                     <h2 class="text-[32px] font-light tracking-[0.3em] opacity-90 uppercase text-center">2026 臺灣精油芳療年會</h2>
                 </div>
                 <div class="flex flex-col items-center w-full gap-[60px] mt-10">
-                    <div id="lifeCapsule" class="flex items-center gap-8 px-[60px] py-[30px] rounded-full border-[3px] border-white/30 bg-white/10">
-                        <div class="flex items-center gap-4">
+                    <div id="lifeCapsule" class="flex items-center justify-center rounded-full border-[3px] border-white/30 bg-white/10">
+                        <div class="flex items-center">
                             <span class="text-[40px]">生命靈數：</span>
                             <span class="font-bold text-[60px] font-serif">${data.number}</span>
                         </div>
-                        <h1 class="text-[80px] font-serif font-bold tracking-widest leading-tight pl-8 border-l border-white/30">${data.title}</h1>
+                        <h1 class="text-[80px] font-serif font-bold tracking-widest">${data.title}</h1>
                     </div>
                     <div id="elementConstitutionRow" class="flex items-start justify-center w-full px-[20px]">
                         <div class="flex flex-col items-center w-1/2 px-[20px]">
@@ -976,11 +982,9 @@
             const daySelect = document.getElementById('day-select');
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
-                    navbar.classList.add('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg', 'py-4');
-                    navbar.classList.remove('py-6');
+                    navbar.classList.add('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg');
                 } else {
-                    navbar.classList.remove('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg', 'py-4');
-                    navbar.classList.add('py-6');
+                    navbar.classList.remove('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg');
                 }
             });
             mobileMenuBtn.addEventListener('click', () => {
