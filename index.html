@@ -139,10 +139,12 @@
             font-variant-numeric: tabular-nums;
         }
 
-        /* 匯出專用樣式 */
+        /* 匯出專用樣式 - 強制固定輸出規格 */
         #export-card.export-mode {
             width: 1080px !important;
             height: 1920px !important;
+            min-width: 1080px !important;
+            min-height: 1920px !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
@@ -156,23 +158,33 @@
             overflow: hidden !important;
         }
         
-        /* 輸出跑版修正 (Targeting specified IDs) */
+        /* 輸出跑版修正 (Targeting specified IDs to force Desktop-standard layouts) */
         #export-card.is-exporting #lifeCapsule {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
+            gap: 32px !important;
+            padding: 30px 60px !important;
+            border-radius: 9999px !important;
         }
         #export-card.is-exporting #elementConstitutionRow {
             display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
+            flex-direction: row !important;
+            align-items: flex-start !important;
+            justify-content: center !important;
             line-height: 1.2 !important;
             margin-bottom: 40px !important;
+            width: 100% !important;
+        }
+        #export-card.is-exporting #elementConstitutionRow > div {
+            width: 50% !important;
+            flex: none !important;
         }
         #export-card.is-exporting #firstBlockAfterRow {
             margin-top: 60px !important;
             display: block !important;
+            width: 100% !important;
         }
         #export-card.is-exporting #listenerQuoteCard {
             display: flex !important;
@@ -180,6 +192,19 @@
             justify-content: center !important;
             line-height: 1.6 !important;
             text-align: center !important;
+            height: 280px !important;
+            min-height: 280px !important;
+        }
+        #export-card.is-exporting #partnerCardWood,
+        #export-card.is-exporting #partnerCardFire {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            height: 280px !important;
+            padding: 0 60px !important;
+            gap: 60px !important;
+            width: 100% !important;
         }
         #export-card.is-exporting #partnerCardWood > span,
         #export-card.is-exporting #partnerCardFire > span {
@@ -188,10 +213,13 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
+            width: 160px !important;
+            font-size: 160px !important;
         }
         #export-card.is-exporting * {
             transition: none !important;
             animation: none !important;
+            box-shadow: none !important;
         }
     </style>
 <script type="importmap">
@@ -246,7 +274,7 @@
     <section id="hero" class="relative w-full min-h-screen md:min-h-0 md:h-auto laptop:h-[85vh] 2xl:h-screen flex flex-col justify-start md:justify-start lg:justify-center overflow-hidden bg-stone-900 pt-24 md:pt-32 lg:pt-0 pb-12 md:pb-32 lg:pb-0">
         <!-- Background -->
         <div class="absolute inset-0 z-0">
-            <img src="https://img.shoplineapp.com/media/image_clips/693fc987366d70e3a42a157a/original.jpg?1765788039=&owner_id=5caf39294d91a10001727c79" alt="Background" class="w-full h-full object-cover opacity-60">
+            <img src="https://aliztw.github.io/2026-taiwan-aromatherapy-conference/banner.jpg" alt="Background" class="w-full h-full object-cover opacity-60">
             <div class="absolute inset-0 bg-gradient-to-br from-stone-900 via-amber-900/40 to-emerald-900/60 mix-blend-overlay"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-stone-900/20 to-stone-900"></div>
             
@@ -273,7 +301,7 @@
                 <div class="w-full flex flex-col items-center gap-4 laptop:gap-6">
                   <!-- Title Image -->
                   <div class="w-full flex justify-center">
-                    <img src="https://aliztw.github.io/2026-taiwan-aromatherapy-conference/玩轉五行.png" alt="玩轉五行" class="w-[50%] laptop:w-[40%] drop-shadow-2xl h-auto object-contain">
+                    <img src="https://img.shoplineapp.com/media/image_clips/6952512a69f3479d1562bb2a/original.png?1767002410=&owner_id=5caf39294d91a10001727c79" alt="玩轉五行" class="w-[50%] laptop:w-[40%] drop-shadow-2xl h-auto object-contain">
                     <h1 class="sr-only">光影流芳 玩轉五行</h1>
                   </div>
 
@@ -434,18 +462,18 @@
                 <div class="space-y-4">
                     <h4 class="text-white font-bold tracking-wider text-base md:text-lg lg:text-xl uppercase">快速連結</h4>
                     <ul class="space-y-2 text-sm md:text-base lg:text-base">
-                        <li><a href="https://bit.ly/4aWTyVJ" class="hover:text-amber-500">年會限定優惠</a></li>
+                        <li><a href="#" class="hover:text-amber-500">年會限定優惠</a></li>
                     </ul>
                 </div>
                 <div class="space-y-4">
                     <h4 class="text-white font-bold tracking-wider text-base md:text-lg lg:text-xl uppercase">聯絡我們</h4>
                     <div class="flex flex-wrap gap-4">
-                        <a href="https://bit.ly/3YGeV6s" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                        <a href="https://bit.ly/4sGpt37" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                        <a href="https://bit.ly/3NkJufn" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white overflow-hidden group transition-all">
+                        <a href="https://www.facebook.com/ALIZTW" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="https://www.instagram.com/aliz_aromacreator/" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="https://lin.ee/ZwEOveq" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white overflow-hidden group transition-all">
                             <div class="w-full h-full flex items-center justify-center text-xs font-bold">LINE</div>
                         </a>
-                        <a href="https://bit.ly/4bzUa3M" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all"><i data-lucide="globe" class="w-5 h-5"></i></a>
+                        <a href="https://www.aliztwshop.com/" target="_blank" class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-800 flex items-center justify-center hover:bg-amber-600 hover:text-white transition-all"><i data-lucide="globe" class="w-5 h-5"></i></a>
                     </div>
                 </div>
             </div>
@@ -471,7 +499,7 @@
                 tag: "前導區域",
                 color: "text-white",
                 bgGradient: "from-stone-900 via-stone-800 to-stone-950",
-                imageUrl: "https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?auto=format&fit=crop&w=1200&q=80",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/star.jpg",
                 link: "https://aliztw.github.io/indro/",
                 type: "prologue"
             },
@@ -482,7 +510,7 @@
                 tag: "木之展區",
                 color: "text-white",
                 bgGradient: "from-el-wood to-emerald-800",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3813f52684d32c66f3b/original.jpg?1765385089=&owner_id=5caf39294d91a10001727c79",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/wood.jpg",
                 link: "https://aliztw.github.io/wood/",
                 type: "experience"
             },
@@ -493,7 +521,7 @@
                 tag: "火之展區",
                 color: "text-white",
                 bgGradient: "from-el-fire to-red-900",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3872d2bf66a426ce590/original.jpg?1765385094=&owner_id=5caf39294d91a10001727c79",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/fire.jpg",
                 link: "https://aliztw.github.io/fire/",
                 type: "experience"
             },
@@ -504,7 +532,7 @@
                 tag: "土之展區",
                 color: "text-white",
                 bgGradient: "from-el-earth to-amber-900",
-                imageUrl: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=800&q=80",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/earth.jpg",
                 link: "https://aliztw.github.io/earth/",
                 type: "experience"
             },
@@ -515,7 +543,7 @@
                 tag: "金之展區",
                 color: "text-white",
                 bgGradient: "from-el-metal to-amber-800",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a3961e5e75d00618cd98/original.jpg?1765385110=&owner_id=5caf39294d91a10001727c79",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/metal.jpg",
                 link: "https://aliztw.github.io/gold/",
                 type: "experience"
             },
@@ -526,7 +554,7 @@
                 tag: "水之展區",
                 color: "text-white",
                 bgGradient: "from-el-water to-blue-900",
-                imageUrl: "https://img.shoplineapp.com/media/image_clips/6939a39d6dc52d7639694521/original.jpg?1765385116=&owner_id=5caf39294d91a10001727c79",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/water.jpg",
                 link: "https://aliztw.github.io/water/",
                 type: "experience"
             }
@@ -645,20 +673,27 @@
             const isSamsung = /SamsungBrowser/i.test(ua);
 
             try {
+                // Ensure hidden card is updated with current data
                 renderExportCard(currentResultData);
                 const exportCard = document.getElementById('export-card');
                 
+                // DATA URI FALLBACK: Replace logo with data URL for CORS compatibility
                 const logoImg = exportCard.querySelector('#alizWhiteLogo');
                 const originalSrc = logoImg.src;
                 const dataUrl = await toDataURL(originalSrc);
                 logoImg.src = dataUrl;
 
+                // Force layout state
                 exportCard.classList.add('export-mode', 'is-exporting');
+                
+                // Wait for assets and reflow
                 if (document.fonts) await document.fonts.ready;
                 await waitForImageLoad('#alizWhiteLogo');
-                
+                exportCard.getBoundingClientRect(); // Trigger reflow
+
                 await new Promise(resolve => setTimeout(resolve, 800));
                 
+                // Capture the off-screen card specifically
                 const canvas = await html2canvas(exportCard, {
                     scale: 2, 
                     useCORS: true, 
@@ -667,10 +702,14 @@
                     backgroundColor: null, 
                     logging: false, 
                     width: 1080, 
-                    height: 1920
+                    height: 1920,
+                    windowWidth: 1080,
+                    windowHeight: 1920
                 });
 
+                // RESTORE
                 logoImg.src = originalSrc;
+                exportCard.classList.remove('is-exporting');
 
                 canvas.toBlob(async (blob) => {
                     if (!blob) throw new Error("Blob generation failed");
@@ -713,7 +752,6 @@
                         handleBlobDownload(blob);
                     }
                     
-                    exportCard.classList.remove('is-exporting');
                     btn.innerHTML = originalContent;
                     btn.disabled = false;
                     lucide.createIcons();
