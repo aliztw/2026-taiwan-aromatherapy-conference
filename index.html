@@ -186,7 +186,7 @@
             height: 80px !important;
             position: relative !important;
             top: 25px !important; /* 對齊數字與標題中央高度 */
-            left: 15px !important; /* 使其往右移動遠離左側數字 */
+            left: 15px !important; /* 修正：由 -15px 改為 15px，使其往右移動遠離左側數字 */
             margin-right: 25px !important; /* 調整與右側標題的間距 */
             display: block !important;
         }
@@ -258,7 +258,6 @@
             justify-content: center !important;
             line-height: 1.6 !important;
             text-align: center !important;
-            padding-bottom: 40px !important; /* 修正：增加底部內距使文字視覺上往上移動 */
         }
         #export-card.is-exporting * {
             transition: none !important;
@@ -498,7 +497,7 @@
                 <div class="space-y-4">
                     <h4 class="text-white font-bold tracking-wider text-base md:text-lg lg:text-xl uppercase">快速連結</h4>
                     <ul class="space-y-2 text-sm md:text-base lg:text-base">
-                        <li><a href="https://bit.ly/4aWTyVJ" class="hover:text-amber-500">年會限定優惠</a></li>
+                        <li><a href="#" class="hover:text-amber-500">年會限定優惠</a></li>
                     </ul>
                 </div>
                 <div class="space-y-4">
@@ -558,3 +557,424 @@
                 subtitle: "包含：心之明辨｜數字反應",
                 tag: "火之展區",
                 color: "text-white",
+                bgGradient: "from-el-fire to-red-900",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/fire.jpg",
+                link: "https://aliztw.github.io/fire/",
+                type: "experience"
+            },
+            {
+                id: 'earth',
+                title: "土 · 穩定之基",
+                subtitle: "包含：土之穩行｜指尖走線",
+                tag: "土之展區",
+                color: "text-white",
+                bgGradient: "from-el-earth to-amber-900",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/earth.jpg",
+                link: "https://aliztw.github.io/earth/",
+                type: "experience"
+            },
+            {
+                id: 'metal',
+                title: "金 · 收斂之質",
+                subtitle: "包含：金之綿長｜出一口氣",
+                tag: "金之展區",
+                color: "text-white",
+                bgGradient: "from-el-metal to-amber-800",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/metal.jpg",
+                link: "https://aliztw.github.io/gold/",
+                type: "experience"
+            },
+            {
+                id: 'water',
+                title: "水 · 流動之韻",
+                subtitle: "包含：水之定力｜金雞獨立",
+                tag: "水之展區",
+                color: "text-white",
+                bgGradient: "from-el-water to-blue-900",
+                imageUrl: "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/water.jpg",
+                link: "https://aliztw.github.io/water/",
+                type: "experience"
+            }
+        ];
+
+        const ELEMENT_MAPPING = {
+            1: { element: "木", constitution: "氣鬱x血瘀", title: "開創者", description: "你是超級行動派，敢冒險、不服輸的開創先鋒。", color: "bg-el-wood", hex: "#8b934e", darkHex: "#5d6335", partner: { comp: "火", compDesc: "你的創意會被他的熱情點亮", conflict: "土", conflictDesc: "你的點子太多，他的步伐一時跟不上" } },
+            2: { element: "水", constitution: "陽虛x特稟", title: "協調者", description: "你是細膩的傾聽者，擅長在人際中成為潤滑劑。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "你的直覺在他的靈感中再次流動", conflict: "火", conflictDesc: "你的冷靜過深，讓他的熱情被澆熄了" } },
+            3: { element: "火", constitution: "陰虛x濕熱", title: "表達者", description: "你用熱情點亮世界，擁有點燃氣氛的感染力。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
+            4: { element: "土", constitution: "氣虛x痰濕", title: "穩固者", description: "你是注重細節、務實可靠，能把理想落地的人。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "你的務實會被他的調理放大", conflict: "水", conflictDesc: "你的關懷過滿，反而讓他喘不過氣" } },
+            5: { element: "火", constitution: "陰虛x濕熱", title: "探索者", description: "你對新鮮事物充滿好奇，勇於打破框架前行。", color: "bg-el-fire", hex: "#943425", darkHex: "#632318", partner: { comp: "土", compDesc: "你的衝勁能在他的穩定中落地", conflict: "金", conflictDesc: "你的熱情太旺，他需要時間消化" } },
+            6: { element: "土", constitution: "氣虛x痰濕", title: "照顧者", description: "你樂於照顧他人，是溫暖又包容的療癒存在。", color: "bg-el-earth", hex: "#865f41", darkHex: "#5a402c", partner: { comp: "金", compDesc: "你的務實會被他的調理放大", conflict: "水", conflictDesc: "你的關懷過滿，反而讓他喘不過氣" } },
+            7: { element: "金", constitution: "氣虛x特稟", title: "思考者", description: "你善於冷靜分析與探索真理，是天生的洞察者。", color: "bg-el-metal", hex: "#deab47", darkHex: "#9e7a32", partner: { comp: "水", compDesc: "你的理性在他的柔軟裡變得圓融", conflict: "木", conflictDesc: "你的標準太高，讓他的創意難以伸展" } },
+            8: { element: "金", constitution: "氣虛x特稟", title: "實踐者", description: "你是統籌全局，化理想為現實的執行高手。", color: "bg-el-metal", hex: "#deab47", darkHex: "#9e7a32", partner: { comp: "水", compDesc: "你的理性在他的柔軟裡變得圓融", conflict: "木", conflictDesc: "你的標準太高，讓他的創意難以伸展" } },
+            9: { element: "水", constitution: "陽虛x特稟", title: "奉獻者", description: "你有強烈的使命感，願為世界付出與療癒他人。", color: "bg-el-water", hex: "#589da9", darkHex: "#3b6971", partner: { comp: "木", compDesc: "你的直覺在他的靈感中再次流動", conflict: "火", conflictDesc: "你的冷靜過深，讓他的熱情被澆熄了" } }
+        };
+
+        const LOGO_CARD_URL = "https://aliztw.github.io/2026-taiwan-aromatherapy-conference/aliz-white.png";
+        const STORAGE_KEY = 'aliz_participant_count';
+        let currentResultData = null;
+
+        // --- Functions ---
+
+        async function waitForImageLoad(selector) {
+            const img = document.querySelector(selector);
+            if (!img) return Promise.resolve();
+            if (img.complete) return Promise.resolve();
+            return new Promise(resolve => {
+                img.onload = resolve;
+                img.onerror = resolve;
+            });
+        }
+
+        async function toDataURL(url) {
+            try {
+                const response = await fetch(url, { mode: 'cors' });
+                const blob = await response.blob();
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
+            } catch (e) {
+                console.warn('CORS fetch failed, fallback to original URL', e);
+                return url;
+            }
+        }
+
+        window.scrollToSection = (id) => {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) menu.classList.add('hidden');
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.calculateElement = () => {
+            const yearSelect = document.getElementById('year-select');
+            const monthSelect = document.getElementById('month-select');
+            const daySelect = document.getElementById('day-select');
+            const y = yearSelect.value;
+            const m = monthSelect.value;
+            const d = daySelect.value;
+            if (!y || !m || !d) { alert("請完整選擇出生年月日"); return; }
+            let fullStr = y + m + d;
+            let sum = 0;
+            for (let char of fullStr) sum += parseInt(char);
+            while (sum > 9) {
+                let temp = 0;
+                String(sum).split('').forEach(n => temp += parseInt(n));
+                sum = temp;
+            }
+            const result = ELEMENT_MAPPING[sum];
+            if (result) {
+                currentResultData = { ...result, number: sum };
+                displayResult(sum, result);
+                incrementParticipantCount();
+                document.getElementById('left-card-initial').classList.add('hidden');
+                document.getElementById('left-card-result').classList.remove('hidden');
+            }
+        };
+
+        window.resetCalculator = () => {
+            document.getElementById('year-select').value = "";
+            document.getElementById('month-select').value = "";
+            document.getElementById('day-select').value = "";
+            currentResultData = null;
+            document.getElementById('left-card-initial').classList.remove('hidden');
+            document.getElementById('left-card-result').classList.add('hidden');
+            const container = document.getElementById('result-container');
+            container.innerHTML = `
+                <div id="static-icons" class="flex flex-col gap-6 items-center justify-center h-full min-h-[350px] laptop:min-h-[400px] animate-fade-in-up">
+                    <div class="grid grid-cols-5 gap-3 laptop:gap-6 w-full max-w-lg">
+                        <div class="flex flex-col items-center gap-2"><div class="w-10 h-10 laptop:w-16 laptop:h-16 rounded-full bg-el-wood flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="leaf" class="text-white w-5 h-5 laptop:w-8 laptop:h-8"></i></div><span class="text-el-wood font-bold text-sm laptop:text-base">木</span></div>
+                        <div class="flex flex-col items-center gap-2"><div class="w-10 h-10 laptop:w-16 laptop:h-16 rounded-full bg-el-fire flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="flame" class="text-white w-5 h-5 laptop:w-8 laptop:h-8"></i></div><span class="text-el-fire font-bold text-sm laptop:text-base">火</span></div>
+                        <div class="flex flex-col items-center gap-2"><div class="w-10 h-10 laptop:w-16 laptop:h-16 rounded-full bg-el-earth flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="mountain" class="text-white w-5 h-5 laptop:w-8 laptop:h-8"></i></div><span class="text-el-earth font-bold text-sm laptop:text-base">土</span></div>
+                        <div class="flex flex-col items-center gap-2"><div class="w-10 h-10 laptop:w-16 laptop:h-16 rounded-full bg-el-metal flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="diamond" class="text-white w-5 h-5 laptop:w-8 laptop:h-8"></i></div><span class="text-el-metal font-bold text-sm laptop:text-base">金</span></div>
+                        <div class="flex flex-col items-center gap-2"><div class="w-10 h-10 laptop:w-16 laptop:h-16 rounded-full bg-el-water flex items-center justify-center shadow-lg border-2 border-white"><i data-lucide="droplet" class="text-white w-5 h-5 laptop:w-8 laptop:h-8"></i></div><span class="text-el-water font-bold text-sm laptop:text-base">水</span></div>
+                    </div>
+                    <p class="text-lg laptop:text-2xl text-stone-500 font-serif mt-4 text-center">選擇你的生日，開啟專屬五行之旅</p>
+                </div>
+            `;
+            lucide.createIcons();
+        };
+
+        window.downloadImage = async () => {
+            if (!currentResultData) return;
+            const btn = document.getElementById('download-btn');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> 處理中...`;
+            lucide.createIcons();
+            btn.disabled = true;
+
+            const exportCard = document.getElementById('export-card');
+            const captureRoot = document.getElementById('captureExport');
+
+            try {
+                renderExportCard(currentResultData);
+                const logoImg = exportCard.querySelector('#alizWhiteLogo');
+                const originalSrc = logoImg.src;
+                const dataUrl = await toDataURL(originalSrc);
+                logoImg.src = dataUrl;
+
+                exportCard.classList.add('export-mode', 'is-exporting');
+
+                if (document.fonts) await document.fonts.ready;
+                await waitForImageLoad('#export-card #alizWhiteLogo');
+                captureRoot.getBoundingClientRect(); 
+
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                const canvas = await html2canvas(captureRoot, {
+                    scale: 2, 
+                    useCORS: true, 
+                    allowTaint: false,
+                    imageTimeout: 15000,
+                    backgroundColor: null, 
+                    logging: false, 
+                    width: 1080, 
+                    height: 1920,
+                    windowWidth: 1080,
+                    windowHeight: 1920
+                });
+
+                logoImg.src = originalSrc;
+                exportCard.classList.remove('export-mode', 'is-exporting');
+
+                const blob = await new Promise((resolve, reject) => {
+                    canvas.toBlob((b) => b ? resolve(b) : reject(new Error("Blob failed")), 'image/png');
+                });
+                if (!blob) throw new Error("Blob generation failed");
+
+                const fileName = "aliz-result.png";
+                const ua = navigator.userAgent;
+                const isIOS = /iPhone|iPad|iPod/.test(ua);
+                const isAndroid = /Android/i.test(ua);
+                const isSamsung = /SamsungBrowser/i.test(ua);
+
+                if (isIOS && navigator.share && navigator.canShare && navigator.canShare({ files: [new File([blob], fileName, {type: "image/png"})] })) {
+                    try {
+                        const file = new File([blob], fileName, { type: "image/png" });
+                        await navigator.share({ files: [file], title: '2026 臺灣精油芳療年會', text: ' ' });
+                    } catch (err) {
+                        if (err.name !== 'AbortError') {
+                            const blobUrl = URL.createObjectURL(blob);
+                            window.open(blobUrl, '_blank');
+                        }
+                    }
+                } else if (isAndroid || isSamsung) {
+                    const blobUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = fileName;
+                    link.rel = "noopener";
+                    link.target = "_self";
+                    document.body.appendChild(link);
+                    try { link.click(); } catch (e) { window.open(blobUrl, '_blank'); }
+                    document.body.removeChild(link);
+                    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+                } else {
+                    const blobUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+                }
+
+            } catch (err) {
+                console.error(err);
+                alert('圖片生成失敗，請稍後再試。');
+                if (exportCard) exportCard.classList.remove('export-mode', 'is-exporting');
+            } finally {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                lucide.createIcons();
+            }
+        };
+
+        function incrementParticipantCount() {
+            const storedCount = localStorage.getItem(STORAGE_KEY);
+            let count = storedCount ? parseInt(storedCount) : 0;
+            const prevCount = count;
+            count++;
+            localStorage.setItem(STORAGE_KEY, count.toString());
+            animateCounterValue(prevCount, count, 500);
+        }
+
+        function animateCounterValue(start, end, duration) {
+            const obj = document.getElementById('participant-count');
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const currentValue = Math.floor(progress * (end - start) + start);
+                obj.innerText = currentValue.toLocaleString();
+                if (progress < 1) window.requestAnimationFrame(step);
+                else obj.innerText = end.toLocaleString();
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function renderExhibition() {
+            const grid = document.getElementById('exhibition-grid');
+            grid.innerHTML = EXHIBITION_DATA.map(item => `
+                <div class="group relative isolate overflow-hidden rounded-[2rem] h-[400px] laptop:h-[500px] cursor-pointer shadow-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 border border-stone-100 bg-stone-100" style="-webkit-tap-highlight-color: transparent;">
+                    <img src="${item.imageUrl}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t ${item.bgGradient} opacity-80 mix-blend-multiply transition-opacity duration-300 group-hover:opacity-90"></div>
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60"></div>
+                    <div class="absolute inset-0 p-6 laptop:p-8 flex flex-col justify-between z-10 text-left">
+                        <div class="flex justify-start">
+                            ${item.type === 'prologue' ? `
+                                <div class="relative flex items-center gap-2 bg-gradient-to-r from-amber-500 via-yellow-600 to-amber-500 text-white px-4 py-1.5 laptop:px-5 laptop:py-2 rounded-full text-[9px] laptop:text-xs font-black tracking-[0.2em] shadow-lg shadow-amber-900/50 uppercase overflow-hidden">
+                                    <div class="absolute inset-0 animate-shimmer"></div>
+                                    <div class="relative flex items-center gap-2">
+                                        <i data-lucide="sparkles" class="w-3 laptop:w-3.5 h-3 laptop:h-3.5"></i> 前導區域
+                                    </div>
+                                </div>
+                            ` : `<span class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[10px] laptop:text-sm font-bold text-white tracking-widest uppercase border border-white/10">${item.tag}</span>`}
+                        </div>
+                        <div class="transform translate-y-4 transition-transform duration-500 group-hover:translate-y-0">
+                            <h3 class="text-3xl laptop:text-5xl font-serif font-bold mb-2 text-white drop-shadow-md">${item.title}</h3>
+                            <p class="text-white/80 text-sm laptop:text-xl mb-6 laptop:mb-8 font-light tracking-wide">${item.subtitle}</p>
+                            <a href="${item.link}" class="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 active:bg-white/40 backdrop-blur-md border border-white/40 text-white px-5 py-2 laptop:px-6 laptop:py-3 rounded-full transition-all duration-300 group-hover:pl-8 outline-none text-xs laptop:text-base font-medium">
+                                ${item.type === 'prologue' ? '進入了解' : '進入體驗'} <i data-lucide="arrow-right" class="w-3 laptop:w-4 h-3 laptop:h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function displayResult(number, data) {
+            const container = document.getElementById('result-container');
+            const formattedConstitution = data.constitution.replace(/x/g, '<span class="font-sans mx-1 font-medium opacity-80">x</span>');
+            container.innerHTML = `
+                <div class="w-full h-full flex flex-col justify-between animate-fade-in-up tabular-nums text-left">
+                    <div id="result-card" class="relative w-full max-w-[320px] laptop:max-w-[360px] mx-auto ${data.color} text-white rounded-[24px] shadow-2xl overflow-hidden flex flex-col items-center flex-grow" style="min-height: 520px; laptop:min-height: 580px;">
+                        <div class="pt-8 laptop:pt-10 flex flex-col items-center">
+                            <img id="alizWhiteLogo" src="${LOGO_CARD_URL}" alt="ALIZ Logo" class="h-6 laptop:h-10 object-contain brightness-0 invert mb-2" crossorigin="anonymous" referrerpolicy="no-referrer" decoding="async" loading="eager">
+                            <h2 class="text-[10px] laptop:text-sm font-light tracking-[0.2em] opacity-90 uppercase">2026 臺灣精油芳療年會</h2>
+                        </div>
+                        <div class="mt-6 laptop:mt-8 flex flex-wrap items-center justify-center gap-3 laptop:gap-4 px-4" style="align-items: center;">
+                            <div class="inline-flex items-center justify-center px-4 py-1 rounded-full border border-white/30 bg-white/10 backdrop-blur-sm">
+                                <span class="text-xs laptop:text-base font-medium tracking-wider">生命靈數：<span class="font-bold text-base laptop:text-xl font-serif">${number}</span></span>
+                            </div>
+                            <h1 class="text-2xl laptop:text-4xl font-serif font-bold tracking-widest drop-shadow-md whitespace-nowrap">${data.title}</h1>
+                        </div>
+                        <div class="mt-6 laptop:mt-8 w-full px-4 flex items-start justify-center">
+                            <div class="flex flex-col items-center w-1/2 px-1"><span class="opacity-80 font-light text-xs laptop:text-base mb-2 laptop:mb-3 tracking-widest">五行屬性</span><span class="text-xl laptop:text-3xl font-serif font-bold tracking-widest leading-none">${data.element}</span></div>
+                            <div class="flex flex-col items-center w-1/2 px-1"><span class="opacity-80 font-light text-xs laptop:text-base mb-2 laptop:mb-3 tracking-widest">對應體質</span><span class="text-xl laptop:text-3xl font-serif font-bold tracking-wide leading-none whitespace-nowrap">${formattedConstitution}</span></div>
+                        </div>
+                        <div class="mt-6 laptop:mt-8 mx-6 p-4 laptop:p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/10"><p class="text-center leading-relaxed laptop:leading-loose font-light tracking-wide text-xs laptop:text-base opacity-95">${data.description}</p></div>
+                        <div class="mt-4 laptop:mt-6 mx-6 w-[calc(100%-3rem)] space-y-3 laptop:space-y-4 pb-6 laptop:pb-8">
+                            <div class="bg-white/20 backdrop-blur-sm rounded-[2rem] laptop:rounded-[2.5rem] p-4 laptop:p-5 flex items-center gap-4 laptop:gap-6 border border-white/5" style="align-items: center;"><span class="text-4xl laptop:text-6xl font-serif font-bold leading-none">${data.partner.comp}</span><div class="flex flex-col gap-1"><span class="bg-white text-stone-800 rounded-full px-2 py-0.5 text-[9px] laptop:text-[10px] font-black w-fit tracking-widest uppercase">合拍夥伴</span><span class="text-[10px] laptop:text-xs font-medium opacity-95">${data.partner.compDesc}</span></div></div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-[2rem] laptop:rounded-[2.5rem] p-4 laptop:p-5 flex items-center gap-4 laptop:gap-6 border border-white/5" style="align-items: center;"><span class="text-4xl laptop:text-6xl font-serif font-bold leading-none opacity-80">${data.partner.conflict}</span><div class="flex flex-col gap-1"><span class="bg-white/30 text-white rounded-full px-2 py-0.5 text-[9px] laptop:text-[10px] font-black w-fit tracking-widest uppercase">磨合夥伴</span><span class="text-[10px] laptop:text-xs font-medium opacity-80">${data.partner.conflictDesc}</span></div></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center mt-6 laptop:mt-8 pb-4">
+                        <div class="flex gap-3 laptop:gap-4">
+                            <button onclick="window.resetCalculator()" class="bg-white border px-4 py-2 laptop:px-6 laptop:py-3 rounded-full shadow-md text-stone-600 flex items-center gap-2 text-xs laptop:text-base"><i data-lucide="refresh-cw" class="w-3 h-3 laptop:w-4 laptop:h-4"></i> 重新計算</button>
+                            <button onclick="window.downloadImage()" id="download-btn" class="bg-stone-800 px-4 py-2 laptop:px-6 laptop:py-3 rounded-full shadow-md text-white flex items-center gap-2 text-xs laptop:text-base"><i data-lucide="download" class="w-3 h-3 laptop:w-4 laptop:h-4"></i> 下載分享</button>
+                        </div>
+                        <p class="text-center text-sm text-stone-400 mt-4">立即下載分享到 IG 限動，找到你的合拍與磨合夥伴。</p>
+                    </div>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function renderExportCard(data) {
+            const container = document.getElementById('export-card');
+            const formattedConstitution = data.constitution.replace(/x/g, '<span class="font-sans mx-2 font-medium opacity-80">x</span>');
+            container.className = `${data.color} text-white export-mode tabular-nums text-left`;
+            container.style.background = `linear-gradient(135deg, ${data.hex} 0%, ${data.darkHex} 100%)`;
+            container.innerHTML = `
+                <div class="flex flex-col items-center w-full">
+                    <img id="alizWhiteLogo" src="${LOGO_CARD_URL}" crossorigin="anonymous" referrerpolicy="no-referrer" decoding="async" loading="eager" class="h-[80px] brightness-0 invert mb-4">
+                    <h2 class="text-[32px] font-light tracking-[0.3em] opacity-90 uppercase text-center">2026 臺灣精油芳療年會</h2>
+                </div>
+                <div class="flex flex-col items-center w-full gap-[60px] mt-10">
+                    <div id="lifeCapsule" class="flex items-center gap-8 px-[60px] py-[30px] rounded-full border-[3px] border-white/30 bg-white/10">
+                        <div class="flex items-center gap-4 life-number-text">
+                            <span class="text-[40px] leading-none">生命靈數：</span>
+                            <span class="font-bold text-[60px] font-serif leading-none">${data.number}</span>
+                        </div>
+                        <div id="lifeCapsuleDivider"></div>
+                        <h1 class="text-[80px] font-serif font-bold tracking-widest leading-none flex items-center">${data.title}</h1>
+                    </div>
+                    <div id="elementConstitutionRow" class="flex items-start justify-center w-full px-[20px]">
+                        <div class="flex flex-col items-center w-1/2 px-[20px]">
+                            <span class="opacity-90 font-light text-[36px] mb-[20px] tracking-widest">五行屬性</span>
+                            <span class="text-[80px] font-serif font-bold tracking-widest leading-none">${data.element}</span>
+                        </div>
+                        <div class="flex flex-col items-center w-1/2 px-[20px]">
+                            <span class="opacity-90 font-light text-[36px] mb-[20px] tracking-widest">對應體質</span>
+                            <span class="text-[80px] font-serif font-bold tracking-wide leading-none whitespace-nowrap">${formattedConstitution}</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="listenerQuoteCard" class="w-full p-[60px] bg-white/10 rounded-[50px] border-[3px] border-white/20">
+                    <p class="text-center leading-loose font-light text-[36px] opacity-95">${data.description}</p>
+                </div>
+                <div id="firstBlockAfterRow" class="w-full space-y-8 mb-10 text-left">
+                    <div id="partnerCardWood" class="bg-white/20 rounded-[60px] p-[60px] flex items-center gap-[40px] border-[3px] border-white/20 h-[280px]">
+                        <span class="text-[160px] font-serif font-bold flex items-center justify-center leading-none">${data.partner.comp}</span>
+                        <div class="partner-desc-block">
+                            <span class="partner-badge bg-white text-stone-800 text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest leading-none mb-4">合拍夥伴</span>
+                            <p class="text-[36px] font-medium tracking-wide leading-tight">${data.partner.compDesc}</p>
+                        </div>
+                    </div>
+                    <div id="partnerCardFire" class="bg-white/10 rounded-[60px] p-[60px] flex items-center gap-[40px] border-[3px] border-white/10 h-[280px]">
+                        <span class="text-[160px] font-serif font-bold opacity-80 flex items-center justify-center leading-none">${data.partner.conflict}</span>
+                        <div class="partner-desc-block">
+                            <span class="partner-badge bg-white/20 text-white text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest leading-none mb-4">磨合夥伴</span>
+                            <p class="text-[36px] font-medium tracking-wide opacity-80 leading-tight">${data.partner.conflictDesc}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-[24px] font-light tracking-widest opacity-60 text-center w-full">© 2026 Taiwan Aromatherapy Conference</div>
+            `;
+        }
+
+        // --- Initialization ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.getElementById('navbar');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const yearSelect = document.getElementById('year-select');
+            const monthSelect = document.getElementById('month-select');
+            const daySelect = document.getElementById('day-select');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg', 'py-4');
+                    navbar.classList.remove('py-6');
+                } else {
+                    navbar.classList.remove('bg-stone-900/90', 'backdrop-blur-md', 'shadow-lg', 'py-4');
+                    navbar.classList.add('py-6');
+                }
+            });
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileMenu.classList.contains('hidden') ? 'menu' : 'x';
+                mobileMenuBtn.innerHTML = `<i data-lucide="${icon}"></i>`;
+                lucide.createIcons();
+            });
+            for (let i = 2024; i >= 1940; i--) yearSelect.add(new Option(i.toString(), i.toString()));
+            for (let i = 1; i <= 12; i++) {
+                const v = i.toString().padStart(2, '0');
+                monthSelect.add(new Option(v, v));
+            }
+            for (let i = 1; i <= 31; i++) {
+                const v = i.toString().padStart(2, '0');
+                daySelect.add(new Option(v, v));
+            }
+            renderExhibition();
+            const storedCount = localStorage.getItem(STORAGE_KEY);
+            animateCounterValue(0, storedCount ? parseInt(storedCount) : 0, 2000);
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>--- END OF FILE index.html ---
