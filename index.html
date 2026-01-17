@@ -193,11 +193,12 @@
             border-radius: 9999px !important;
         }
         
-        /* 膠囊垂直置中修正 */
+        /* 膠囊垂直置中修正 (強化強制性) */
         #export-card.is-exporting #lifeCapsule > div {
             height: 100% !important;
             display: flex !important;
             align-items: center !important;
+            line-height: 1 !important;
         }
         #export-card.is-exporting #lifeCapsule h1 {
             height: 100% !important;
@@ -257,7 +258,7 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
-            align-self: stretch !important; /* 強制吃滿高度 */
+            align-self: stretch !important; /* 強制吃滿高度再置中 */
             width: 160px !important;
             font-size: 160px !important;
         }
@@ -721,13 +722,13 @@
                 const exportCard = document.getElementById('export-card');
                 const captureRoot = document.getElementById('captureExport');
                 
-                // DATA URI bypass for CORS
+                // DATA URI fallback for CORS compatibility
                 const logoImg = exportCard.querySelector('#alizWhiteLogo');
                 const originalSrc = logoImg.src;
                 const dataUrl = await toDataURL(LOGO_CARD_URL);
                 logoImg.src = dataUrl;
 
-                // Force layout state
+                // Force layout state (啟用垂直置中鎖定樣式)
                 exportCard.classList.add('export-mode', 'is-exporting');
                 
                 // Wait for assets and reflow
@@ -737,7 +738,7 @@
 
                 await new Promise(resolve => setTimeout(resolve, 800));
                 
-                // Capture from #captureExport
+                // Capture from #captureExport (The off-screen 1080x1920 container)
                 const canvas = await html2canvas(captureRoot, {
                     scale: 2, 
                     useCORS: true, 
@@ -751,11 +752,11 @@
                     windowHeight: 1920
                 });
 
-                // Restore
+                // Restore card status
                 logoImg.src = originalSrc;
                 exportCard.classList.remove('is-exporting');
 
-                // Sequential flow using Promise (Critical for iOS)
+                // Convert to Blob using Promise to keep navigator.share in the click task chain (Critical for iOS)
                 const blob = await new Promise((resolve, reject) => {
                     canvas.toBlob((b) => b ? resolve(b) : reject(new Error("Blob failed")), 'image/png');
                 });
@@ -783,7 +784,7 @@
                         }
                     }
                 } else if (isAndroid || isSamsung) {
-                    // Android / Samsung Branch
+                    // Samsung / Android Blob Download Branch
                     const blobUrl = URL.createObjectURL(blob);
                     const link = document.createElement('a');
                     link.href = blobUrl;
@@ -813,6 +814,8 @@
             } catch (err) {
                 console.error(err);
                 alert('圖片生成失敗，請稍後再試。');
+                const ec = document.getElementById('export-card');
+                if (ec) ec.classList.remove('is-exporting');
             } finally {
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
