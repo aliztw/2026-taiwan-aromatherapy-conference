@@ -163,8 +163,8 @@
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            /* 針對主膠囊進行垂直置中補償 */
-            padding-bottom: 50px !important;
+            /* 將整體內容上提以達到膠囊內置中 */
+            padding-bottom: 58px !important;
             padding-top: 0 !important;
         }
         #export-card.is-exporting #lifeCapsule * {
@@ -172,11 +172,21 @@
             align-items: center !important;
             line-height: 1 !important;
         }
-        /* 確保「生命靈數：1」與右側「開創者」在視覺上齊平 */
+        /* 確保「生命靈數：1」與右側「開創者」及「|」分隔線視覺齊平 */
         #export-card.is-exporting #lifeCapsule .life-number-text {
             display: flex !important;
             align-items: center !important;
-            padding-bottom: 8px !important; /* 微調讓靈數與標題視覺對齊 */
+            /* 針對靈數文字部分的細微修正 */
+            padding-bottom: 4px !important; 
+        }
+        /* 分隔線補償 */
+        #export-card.is-exporting #lifeCapsule h1 {
+            border-left-width: 3px !important;
+            height: 80px !important;
+            display: flex !important;
+            align-items: center !important;
+            /* 將分隔線及其後的文字視覺上與靈數文字對齊 */
+            padding-bottom: 6px !important;
         }
         
         /* 針對夥伴卡片的大字體垂直置中微調 */
@@ -185,9 +195,11 @@
             display: flex !important;
             align-items: center !important;
             justify-content: flex-start !important;
+            height: 280px !important;
+            overflow: hidden !important;
         }
         
-        /* 大五行字 (火、土) 偏移補償，使其在卡片中垂直置中 */
+        /* 大五行字 (火、土) 的垂直補償 */
         #export-card.is-exporting #partnerCardWood > span,
         #export-card.is-exporting #partnerCardFire > span {
             display: flex !important;
@@ -195,17 +207,19 @@
             justify-content: center !important;
             line-height: 1 !important;
             height: 100% !important;
-            padding-bottom: 60px !important; /* 加強垂直居中補償 */
+            /* 將大字「火、土」往上移以在卡片中置中 */
+            padding-bottom: 72px !important; 
             margin-right: 40px !important;
         }
 
-        /* 合拍夥伴/磨合夥伴標籤文字偏移補償 - 確保在膠囊框架內垂直置中 */
+        /* 合拍夥伴/磨合夥伴標籤文字補償 */
         #export-card.is-exporting .partner-badge {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
-            padding-bottom: 22px !important; /* 加大補償量，確保文字置中於膠囊內 */
+            /* 讓標籤文字在膠囊內視覺置中 */
+            padding-bottom: 12px !important;
         }
 
         /* 右側文字描述區塊垂直位置 */
@@ -213,7 +227,8 @@
             display: flex !important;
             flex-direction: column !important;
             justify-content: center !important;
-            padding-bottom: 35px !important; 
+            /* 將右側整個描述塊上移，以對齊左側大字 */
+            padding-bottom: 45px !important; 
         }
 
         #export-card.is-exporting #elementConstitutionRow {
