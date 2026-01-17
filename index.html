@@ -180,18 +180,18 @@
             padding-bottom: 0 !important;
         }
 
-        /* 修正「｜」分隔線的位置：改為獨立元素以精確匹配圖片位置 */
+        /* 修正「｜」分隔線的位置：將其向右移動，避免靠近左側數字 */
         #export-card.is-exporting #lifeCapsuleDivider {
             border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
             height: 80px !important;
             position: relative !important;
-            top: 25px !important; /* 精確對齊數字與標題中央高度 */
-            left: -15px !important; /* 向左偏移以更接近數字 */
-            margin-right: 15px !important;
+            top: 25px !important; /* 對齊數字與標題中央高度 */
+            left: 15px !important; /* 修正：由 -15px 改為 15px，使其往右移動遠離左側數字 */
+            margin-right: 25px !important; /* 調整與右側標題的間距 */
             display: block !important;
         }
 
-        /* 移除標題原有的邊框，標題位置由主結構控制 */
+        /* 移除標題原有的邊框 */
         #export-card.is-exporting #lifeCapsule h1 {
             border-left: none !important;
             display: flex !important;
@@ -497,7 +497,7 @@
                 <div class="space-y-4">
                     <h4 class="text-white font-bold tracking-wider text-base md:text-lg lg:text-xl uppercase">快速連結</h4>
                     <ul class="space-y-2 text-sm md:text-base lg:text-base">
-                        <li><a href="#" class="hover:text-amber-500">年會限定優惠</a></li>
+                        <li><a href="https://bit.ly/4aWTyVJ" class="hover:text-amber-500">年會限定優惠</a></li>
                     </ul>
                 </div>
                 <div class="space-y-4">
@@ -977,4 +977,4 @@
         });
     </script>
 </body>
-</html>
+</html>--- END OF FILE index.html ---
