@@ -156,13 +156,22 @@
             overflow: hidden !important;
         }
         
-        /* 輸出跑版修正 (Targeting specified IDs) */
+        /* 輸出跑版修正 (針對 GitHub 環境加強垂直置中) */
         #export-card.is-exporting #lifeCapsule {
-            height: 160px; 
+            height: 160px !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        #export-card.is-exporting #lifeCapsule * {
+            display: inline-flex !important;
+            align-items: center !important;
+            line-height: 1 !important;
+            height: 100% !important;
+            margin: 0 !important;
         }
         #export-card.is-exporting #elementConstitutionRow {
             display: flex !important;
@@ -827,12 +836,12 @@
                     <h2 class="text-[32px] font-light tracking-[0.3em] opacity-90 uppercase text-center">2026 臺灣精油芳療年會</h2>
                 </div>
                 <div class="flex flex-col items-center w-full gap-[60px] mt-10">
-                    <div id="lifeCapsule" class="flex items-center gap-8 px-[60px] py-[30px] rounded-full border-[3px] border-white/30 bg-white/10">
+                    <div id="lifeCapsule" class="flex items-center gap-8 px-[60px] py-[30px] rounded-full border-[3px] border-white/30 bg-white/10 overflow-hidden">
                         <div class="flex items-center gap-4">
-                            <span class="text-[40px]">生命靈數：</span>
-                            <span class="font-bold text-[60px] font-serif">${data.number}</span>
+                            <span class="text-[40px] leading-none">生命靈數：</span>
+                            <span class="font-bold text-[60px] font-serif leading-none">${data.number}</span>
                         </div>
-                        <h1 class="text-[80px] font-serif font-bold tracking-widest leading-tight pl-8 border-l border-white/30 ml-8">${data.title}</h1>
+                        <h1 class="text-[80px] font-serif font-bold tracking-widest leading-none pl-8 border-l border-white/30 ml-8 flex items-center h-full">${data.title}</h1>
                     </div>
                     <div id="elementConstitutionRow" class="flex items-start justify-center w-full px-[20px]">
                         <div class="flex flex-col items-center w-1/2 px-[20px]">
@@ -850,17 +859,17 @@
                 </div>
                 <div id="firstBlockAfterRow" class="w-full space-y-8 mb-10 text-left">
                     <div id="partnerCardWood" class="bg-white/20 rounded-[60px] p-[60px] flex items-center gap-[60px] border-[3px] border-white/20 h-[280px]">
-                        <span class="text-[160px] font-serif font-bold flex items-center justify-center">${data.partner.comp}</span>
+                        <span class="text-[160px] font-serif font-bold flex items-center justify-center leading-none h-full">${data.partner.comp}</span>
                         <div class="flex flex-col gap-4">
-                            <span class="bg-white text-stone-800 text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest">合拍夥伴</span>
-                            <p class="text-[36px] font-medium tracking-wide">${data.partner.compDesc}</p>
+                            <span class="bg-white text-stone-800 text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest leading-none">合拍夥伴</span>
+                            <p class="text-[36px] font-medium tracking-wide leading-none">${data.partner.compDesc}</p>
                         </div>
                     </div>
                     <div id="partnerCardFire" class="bg-white/10 rounded-[60px] p-[60px] flex items-center gap-[60px] border-[3px] border-white/10 h-[280px]">
-                        <span class="text-[160px] font-serif font-bold opacity-80 flex items-center justify-center">${data.partner.conflict}</span>
+                        <span class="text-[160px] font-serif font-bold opacity-80 flex items-center justify-center leading-none h-full">${data.partner.conflict}</span>
                         <div class="flex flex-col gap-4">
-                            <span class="bg-white/20 text-white text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest">磨合夥伴</span>
-                            <p class="text-[36px] font-medium tracking-wide opacity-80">${data.partner.conflictDesc}</p>
+                            <span class="bg-white/20 text-white text-[24px] font-bold px-8 py-2 rounded-full w-fit uppercase tracking-widest leading-none">磨合夥伴</span>
+                            <p class="text-[36px] font-medium tracking-wide opacity-80 leading-none">${data.partner.conflictDesc}</p>
                         </div>
                     </div>
                 </div>
