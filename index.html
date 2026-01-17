@@ -180,14 +180,14 @@
             padding-bottom: 0 !important;
         }
 
-        /* 修正「｜」分隔線的位置：將其向右移動，避免靠近左側數字 */
+        /* 修正「｜」分隔線的位置：往右邊移動，遠離左側數字 */
         #export-card.is-exporting #lifeCapsuleDivider {
             border-left: 3px solid rgba(255, 255, 255, 0.3) !important;
             height: 80px !important;
             position: relative !important;
-            top: 25px !important; /* 對齊數字與標題中央高度 */
-            left: 15px !important; /* 修正：由 -15px 改為 15px，使其往右移動遠離左側數字 */
-            margin-right: 25px !important; /* 調整與右側標題的間距 */
+            top: 25px !important; 
+            left: 35px !important; /* 加大位移使「｜」往右邊移動 */
+            margin-right: 15px !important; /* 同步微調間距 */
             display: block !important;
         }
 
@@ -252,13 +252,17 @@
             margin-top: 60px !important;
             display: block !important;
         }
+        
+        /* 修正：描述文字區塊垂直位置，讓文字更往上移動以達到視覺置中 */
         #export-card.is-exporting #listenerQuoteCard {
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             line-height: 1.6 !important;
             text-align: center !important;
+            padding-bottom: 60px !important; /* 加大底部內距，使文字視覺重心向上移動 */
         }
+        
         #export-card.is-exporting * {
             transition: none !important;
             animation: none !important;
@@ -330,9 +334,7 @@
             
             <!-- Left Column -->
             <div class="space-y-6 laptop:space-y-10 animate-fade-in-up flex flex-col items-center text-center">
-                <!-- Counter -->
                 <br>
-
                 <div class="w-full flex flex-col items-center gap-4 laptop:gap-6" style="margin-top:20px;">
                   <!-- Title Image -->
                   <div class="w-full flex justify-center">
@@ -977,4 +979,4 @@
         });
     </script>
 </body>
-</html>--- END OF FILE index.html ---
+</html>
